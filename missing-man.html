@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE MISSING MAN — BLACK FILES</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                linear-gradient(rgba(0,0,0,.50), rgba(0,0,0,.80)),
+                url("the missing ma.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #c7c7c7;
+            font-family: "Share Tech Mono", monospace;
+            overflow-x: hidden;
+        }
+
+        /* FOG */
+
+        .fog {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    transparent 20%,
+                    rgba(0,0,0,.85) 85%
+                );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* NOISE */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            opacity: .07;
+            pointer-events: none;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    #fff 3px
+                );
+            z-index: 3;
+        }
+
+        /* HEADER */
+
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(90,0,0,.25),
+                    transparent 60%
+                );
+        }
+
+        .classified {
+            color: #777;
+            letter-spacing: 5px;
+            font-size: 13px;
+        }
+
+        h1 {
+            margin: 25px 0 10px;
+            font-family: "Creepster", cursive;
+            font-size: clamp(55px, 10vw, 120px);
+            color: #8f0000;
+            text-shadow:
+                0 0 10px #400000,
+                0 0 30px #180000;
+            animation: flicker 4s infinite;
+        }
+
+        .case {
+            color: #aaa;
+            letter-spacing: 8px;
+        }
+
+        .room {
+            margin-top: 15px;
+            color: #b00000;
+            letter-spacing: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        /* MAIN */
+
+        main {
+            position: relative;
+            z-index: 4;
+            width: min(900px, 92%);
+            margin: auto;
+        }
+
+        /* WARNING */
+
+        .warning {
+            border: 1px solid #600000;
+            padding: 25px;
+            margin-bottom: 80px;
+            text-align: center;
+            background: rgba(20,0,0,.75);
+            box-shadow:
+                0 0 30px rgba(120,0,0,.15);
+        }
+
+        .warning span {
+            font-size: 40px;
+            color: #a00000;
+        }
+
+        .warning p {
+            margin-top: 10px;
+            color: #a00000;
+            letter-spacing: 3px;
+        }
+
+        /* STORY */
+
+        .story {
+            font-size: 17px;
+            line-height: 2;
+            background: rgba(0,0,0,.72);
+            padding: 50px;
+            border-left: 2px solid #470000;
+            border-right: 2px solid #220000;
+            box-shadow:
+                0 0 80px rgba(0,0,0,.9);
+        }
+
+        .story p {
+            margin: 25px 0;
+        }
+
+        .story b {
+            color: #ddd;
+        }
+
+        h2 {
+            margin: 60px 0;
+            text-align: center;
+            color: #9d0000;
+            font-family: "Creepster", cursive;
+            font-size: 45px;
+            text-shadow: 0 0 15px #3b0000;
+        }
+
+        /* TIME */
+
+        .time {
+            color: #777;
+            border-bottom: 1px solid #222;
+            padding-bottom: 8px;
+            letter-spacing: 3px;
+        }
+
+        /* SOUND */
+
+        .sound {
+            margin: 35px 0;
+            text-align: center;
+            color: #aaa;
+            font-size: 28px;
+            letter-spacing: 8px;
+            animation: shake 3s infinite;
+        }
+
+        /* CHAT */
+
+        .chat {
+            margin: 40px 0;
+        }
+
+        .message {
+            width: fit-content;
+            max-width: 75%;
+            padding: 12px 18px;
+            margin: 14px 0;
+            border-radius: 5px;
+            line-height: 1.6;
+            background: #151515;
+            box-shadow: 0 5px 20px #000;
+        }
+
+        .message small {
+            display: block;
+            color: #777;
+            margin-bottom: 4px;
+        }
+
+        .left {
+            border-left: 3px solid #333;
+        }
+
+        .right {
+            margin-left: auto;
+            border-right: 3px solid #520000;
+            background: #190909;
+        }
+
+        /* PHONE */
+
+        .phone {
+            margin: 45px 0;
+            padding: 25px;
+            background: #080808;
+            border: 1px solid #333;
+            box-shadow:
+                inset 0 0 30px #000,
+                0 0 30px rgba(0,0,0,.8);
+        }
+
+        .phone span {
+            color: #555;
+            font-size: 12px;
+            letter-spacing: 3px;
+        }
+
+        .phone p {
+            color: #bbb;
+            margin: 15px 0;
+        }
+
+        .danger {
+            border-color: #550000;
+            animation: phoneGlow 3s infinite;
+        }
+
+        /* DOOR */
+
+        .door {
+            margin: 50px auto;
+            width: 250px;
+            height: 330px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid #171717;
+            background:
+                linear-gradient(
+                    90deg,
+                    #080808,
+                    #222,
+                    #090909
+                );
+            color: #720000;
+            font-size: 25px;
+            box-shadow:
+                0 0 40px #000,
+                inset 0 0 50px #000;
+        }
+
+        /* MIRROR */
+
+        .mirror-text {
+            margin: 60px auto;
+            padding: 35px;
+            width: 80%;
+            text-align: center;
+            color: #777;
+            font-size: 24px;
+            border: 1px solid #292929;
+            background: rgba(255,255,255,.015);
+            text-shadow: 0 0 8px #777;
+            transform: rotate(-1deg);
+        }
+
+        .big {
+            font-size: 40px;
+            color: #900000;
+            animation: flicker 2s infinite;
+        }
+
+        /* WHISPER */
+
+        .whisper {
+            margin: 45px 0;
+            text-align: center;
+            color: #9c0000;
+            font-size: 22px;
+            font-style: italic;
+            text-shadow: 0 0 12px #4a0000;
+            animation: whisper 2s infinite;
+        }
+
+        /* GLITCH */
+
+        .glitch {
+            margin: 60px 0;
+            padding: 30px;
+            text-align: center;
+            color: #b00000;
+            border: 1px solid #3a0000;
+            letter-spacing: 5px;
+            animation: glitch 1.5s infinite;
+        }
+
+        /* PHOTO */
+
+        .photo-warning {
+            margin: 60px auto;
+            padding: 40px;
+            width: 300px;
+            text-align: center;
+            background: #111;
+            border: 1px solid #333;
+            color: #a00000;
+            transform: rotate(2deg);
+            box-shadow: 10px 15px 40px #000;
+        }
+
+        /* GRAVEYARD MESSAGE */
+
+        .graveyard-message {
+            margin: 100px 0;
+            padding: 100px 20px;
+            text-align: center;
+            font-family: "Creepster", cursive;
+            font-size: 80px;
+            color: #530000;
+            text-shadow:
+                0 0 20px #120000,
+                0 0 60px #000;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        /* FINAL */
+
+        .final {
+            margin-top: 100px;
+            padding: 50px;
+            border: 1px solid #450000;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(80,0,0,.15),
+                    transparent
+                );
+        }
+
+        .red {
+            color: #a00000;
+            letter-spacing: 3px;
+        }
+
+        /* CASE STATUS */
+
+        .case-status {
+            margin: 120px 0;
+            padding: 40px;
+            background: #070707;
+            border: 1px solid #333;
+            box-shadow: 0 0 60px #000;
+        }
+
+        .case-status h2 {
+            margin-top: 10px;
+        }
+
+        .case-status span {
+            color: #a00000;
+            animation: pulse 1s infinite;
+        }
+
+        .case-status hr {
+            border: 0;
+            border-top: 1px solid #333;
+            margin: 30px 0;
+        }
+
+        .final-message {
+            text-align: center;
+            color: #888;
+            font-size: 20px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            position: relative;
+            z-index: 5;
+            padding: 50px;
+            text-align: center;
+            color: #444;
+            border-top: 1px solid #222;
+            letter-spacing: 4px;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+
+            20%, 62% {
+                opacity: .35;
+            }
+
+        }
+
+        @keyframes pulse {
+
+            50% {
+                opacity: .35;
+            }
+
+        }
+
+        @keyframes shake {
+
+            0%, 90%, 100% {
+                transform: translateX(0);
+            }
+
+            92% {
+                transform: translateX(-4px);
+            }
+
+            94% {
+                transform: translateX(4px);
+            }
+
+        }
+
+        @keyframes phoneGlow {
+
+            50% {
+                box-shadow: 0 0 30px rgba(100,0,0,.25);
+            }
+
+        }
+
+        @keyframes whisper {
+
+            0%, 100% {
+                opacity: .45;
+                transform: translateX(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateX(3px);
+            }
+
+        }
+
+        @keyframes glitch {
+
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-3px);
+            }
+
+            40% {
+                transform: translateX(3px);
+            }
+
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .story {
+                padding: 25px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 65px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .mirror-text {
+                width: 100%;
+            }
+
+            .graveyard-message {
+                font-size: 50px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="fog"></div>
+    <div class="noise"></div>
+
+
+    <header>
+
+        <p class="classified">
+            [ TOP SECRET / RESTRICTED ]
+        </p>
+
+        <h1>
+            THE MISSING MAN
+        </h1>
+
+        <p class="case">
+            CASE FILE #013
+        </p>
+
+        <p class="room">
+            SUBJECT: AARAV
+        </p>
+
+    </header>
+
+
+    <main>
+
+        <section class="warning">
+
+            <span>☠</span>
+
+            <p>
+                THIS FILE SHOULD NOT HAVE BEEN RECOVERED.
+            </p>
+
+        </section>
+
+
+        <section class="story">
+
+            <h2>
+                THE DISAPPEARANCE
+            </h2>
+
+            <p>
+                17 saal phele ek ladka achanak gayab ho gya tha.
+            </p>
+
+            <p>
+                Uska naam <b>AARAV</b> tha.
+                Wo Blackwood ki ek purani abandoned building
+                ke bare mai investigate kr rha tha.
+            </p>
+
+            <p class="red">
+                LEKIN US RAAT JO HUA...
+                USKA KOI ANSWER AAJ TAK NHI MILA.
+            </p>
+
+
+            <p class="time">
+                11:42 PM
+            </p>
+
+
+            <p>
+                Aarav building ke andar ja chuka tha.
+                Usna apna phone nikala or friend ko msg kiya.
+            </p>
+
+
+            <div class="chat">
+
+                <div class="message left">
+                    <small>AARAV</small>
+                    bhai mai building ke andar aa gya hu
+                </div>
+
+                <div class="message right">
+                    <small>FRIEND</small>
+                    akela mt jaana bhai
+                </div>
+
+                <div class="message left">
+                    <small>AARAV</small>
+                    tension mt le 😂
+                    bas kuch photos lunga or nikal jaunga
+                </div>
+
+            </div>
+
+
+            <p class="time">
+                11:58 PM
+            </p>
+
+
+            <p>
+                Kuch der baad Aarav na ek photo send ki.
+            </p>
+
+            <p>
+                Photo mai ek lamba sa dark corridor tha.
+                Corridor ke end mai ek black door tha.
+            </p>
+
+
+            <div class="door">
+                ROOM 17
+            </div>
+
+
+            <div class="chat">
+
+                <div class="message right">
+                    <small>FRIEND</small>
+                    bhai ye Room 17 hai kya?
+                </div>
+
+                <div class="message left">
+                    <small>AARAV</small>
+                    pta nhi
+                </div>
+
+                <div class="message left">
+                    <small>AARAV</small>
+                    lekin ek cheez ajeeb hai
+                </div>
+
+                <div class="message right">
+                    <small>FRIEND</small>
+                    kya hua?
+                </div>
+
+                <div class="message left">
+                    <small>AARAV</small>
+                    mai jidhar bhi ja rha hu
+                    ye door mere saamne aa ja rha hai
+                </div>
+
+            </div>
+
+
+            <div class="sound">
+                TAP... TAP... TAP...
+            </div>
+
+
+            <p>
+                Aarav ne achanak typing karna band kr diya.
+            </p>
+
+            <p>
+                Friend ko laga shayad network chala gya hoga.
+            </p>
+
+
+            <p class="time">
+                12:17 AM
+            </p>
+
+
+            <div class="phone danger">
+
+                <span>
+                    UNKNOWN NUMBER
+                </span>
+
+                <p>
+                    DON'T FIND HIM.
+                </p>
+
+            </div>
+
+
+            <div class="phone danger">
+
+                <span>
+                    UNKNOWN NUMBER
+                </span>
+
+                <p>
+                    HE FOUND YOU FIRST.
+                </p>
+
+            </div>
+
+
+            <p class="red">
+                USKE BAAD AARAV KA PHONE BAND HO GYA.
+            </p>
+
+
+            <div class="whisper">
+                bhai...
+            </div>
+
+
+            <p>
+                Friend na turant Aarav ko call kiya.
+                Phone ring ho rha tha...
+                lekin Aarav call nhi utha rha tha.
+            </p>
+
+            <p>
+                Kuch minutes baad phone completely
+                unreachable ho gya.
+            </p>
+
+
+            <h2>
+                NEXT MORNING
+            </h2>
+
+
+            <p>
+                Agli subah police building mai gyi.
+                Puri building search ki gayi.
+            </p>
+
+            <p>
+                Har room check hua.
+            </p>
+
+            <p class="red">
+                LEKIN AARAV KAHIN NHI MILA.
+            </p>
+
+            <p>
+                Sirf uska phone ek empty room mai mila.
+            </p>
+
+
+            <div class="photo-warning">
+
+                LAST PHOTO
+
+                <br><br>
+
+                FILE #013-B
+
+                <br><br>
+
+                DATE: UNKNOWN
+
+            </div>
+
+
+            <h2>
+                17 YEARS LATER
+            </h2>
+
+
+            <p>
+                17 saal baad Blackwood ke old security
+                records dobara mile.
+            </p>
+
+            <p>
+                Records mai ek damaged video bhi tha.
+            </p>
+
+            <p class="time">
+                DATE: 03 / 09 / 2026
+            </p>
+
+
+            <p>
+                Video mai ek aadmi corridor mai khada tha.
+                Face clear nhi dikh rha tha.
+            </p>
+
+            <p class="red">
+                LEKIN USKE KAPDE BILKUL WAISE HI THE
+                JAISE AARAV NE 17 SAAL PHELE PEHNE THE.
+            </p>
+
+
+            <div class="phone">
+
+                <span>
+                    VIDEO TIMESTAMP
+                </span>
+
+                <p>
+                    12:17:17 AM
+                </p>
+
+            </div>
+
+
+            <div class="mirror-text">
+
+                EK AUR CHEEZ VIDEO MAI DIKHI...
+
+                <br><br>
+
+                <span class="big">
+                    ROOM 17
+                </span>
+
+            </div>
+
+
+            <p>
+                Video ke background mai wahi black door tha.
+            </p>
+
+            <p>
+                Aur door ke saamne ek aadmi khada tha.
+            </p>
+
+
+            <div class="glitch">
+                AARAV
+            </div>
+
+
+            <p>
+                Lekin video ki date thi:
+            </p>
+
+            <p class="red">
+                03 / 09 / 2026
+            </p>
+
+            <p>
+                Matlab...
+                Aarav ke gayab hone ke exactly 17 saal baad.
+            </p>
+
+
+            <h2>
+                FINAL MESSAGE
+            </h2>
+
+
+            <p>
+                Archive ko open karne wale technician ne
+                photo ko zoom kiya.
+            </p>
+
+            <p>
+                Jaise hi usna photo open ki...
+                screen black ho gayi.
+            </p>
+
+
+            <div class="phone danger">
+
+                <span>
+                    UNKNOWN
+                </span>
+
+                <p>
+                    YOU FOUND HIS FILE.
+                </p>
+
+            </div>
+
+
+            <div class="phone danger">
+
+                <span>
+                    UNKNOWN
+                </span>
+
+                <p>
+                    NOW HE KNOWS YOUR NAME.
+                </p>
+
+            </div>
+
+
+            <div class="whisper">
+                ROOM 17 WAS NEVER EMPTY.
+            </div>
+
+
+            <div class="glitch">
+
+                HE WAS NEVER LOST.
+
+                <br><br>
+
+                HE WAS WAITING.
+
+            </div>
+
+
+            <section class="final">
+
+                <p class="red">
+                    FINAL ARCHIVE ENTRY
+                </p>
+
+                <br>
+
+                <p>
+                    Aarav ko 17 saal tak kisi ne nhi dekha.
+                </p>
+
+                <p>
+                    Lekin 2026 mai uski photo
+                    khud archive mai wapas aa gayi.
+                </p>
+
+            </section>
+
+
+            <section class="case-status">
+
+                <h2>
+                    CASE STATUS
+                </h2>
+
+                <hr>
+
+                <p>
+                    SUBJECT:
+                    <span>AARAV</span>
+                </p>
+
+                <br>
+
+                <p>
+                    STATUS:
+                    <span>MISSING</span>
+                </p>
+
+                <br>
+
+                <p>
+                    LAST LOCATION:
+                    <span>BLACKWOOD BUILDING</span>
+                </p>
+
+                <br>
+
+                <p>
+                    LAST TIME:
+                    <span>12:17 AM</span>
+                </p>
+
+                <br>
+
+                <p>
+                    ROOM:
+                    <span>17</span>
+                </p>
+
+                <br>
+
+                <p>
+                    CASE:
+                    <span>UNRESOLVED</span>
+                </p>
+
+            </section>
+
+
+            <div class="final-message">
+
+                HE WAS NEVER FOUND.
+
+                <br><br>
+
+                BUT HIS FILE WAS.
+
+            </div>
+
+
+            <div class="graveyard-message">
+
+                FILE #013
+
+                <br>
+
+                ACCESS RESTRICTED
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        CASE #013 — STATUS: UNRESOLVED
+
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Whispering Room</title>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.80)),
+        url("creepy.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: #c7c7c7;
+    font-family: "Share Tech Mono", monospace;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   FOG
+========================= */
+
+.fog {
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 20%,
+            rgba(0,0,0,.85) 85%
+        );
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* =========================
+   NOISE
+========================= */
+
+.noise {
+    position: fixed;
+    inset: 0;
+
+    opacity: .07;
+    pointer-events: none;
+
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            #fff 3px
+        );
+
+    z-index: 3;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(90,0,0,.25),
+            transparent 60%
+        );
+}
+
+.classified {
+    color: #777;
+    letter-spacing: 5px;
+    font-size: 13px;
+}
+
+h1 {
+    margin: 25px 0 10px;
+
+    font-family: "Creepster", cursive;
+    font-size: clamp(55px, 10vw, 120px);
+
+    color: #8f0000;
+
+    text-shadow:
+        0 0 10px #400000,
+        0 0 30px #180000;
+
+    animation: flicker 4s infinite;
+}
+
+.case {
+    color: #aaa;
+    letter-spacing: 8px;
+}
+
+.room {
+    margin-top: 15px;
+
+    color: #b00000;
+    letter-spacing: 6px;
+
+    animation: pulse 2s infinite;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    position: relative;
+    z-index: 4;
+
+    width: min(900px, 92%);
+    margin: auto;
+}
+
+
+/* =========================
+   WARNING
+========================= */
+
+.warning {
+    border: 1px solid #600000;
+
+    padding: 25px;
+    margin-bottom: 80px;
+
+    text-align: center;
+
+    background: rgba(20,0,0,.75);
+
+    box-shadow:
+        0 0 30px rgba(120,0,0,.15);
+}
+
+.warning span {
+    font-size: 40px;
+    color: #a00000;
+}
+
+.warning p {
+    margin-top: 10px;
+
+    color: #a00000;
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   STORY
+========================= */
+
+.story {
+    font-size: 17px;
+    line-height: 2;
+
+    background: rgba(0,0,0,.72);
+
+    padding: 50px;
+
+    border-left: 2px solid #470000;
+    border-right: 2px solid #220000;
+
+    box-shadow:
+        0 0 80px rgba(0,0,0,.9);
+}
+
+.story p {
+    margin: 25px 0;
+}
+
+.story b {
+    color: #ddd;
+}
+
+h2 {
+    margin: 60px 0;
+
+    text-align: center;
+
+    color: #9d0000;
+
+    font-family: "Creepster", cursive;
+    font-size: 45px;
+
+    text-shadow: 0 0 15px #3b0000;
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+.time {
+    color: #777;
+
+    border-bottom: 1px solid #222;
+
+    padding-bottom: 8px;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   SOUND
+========================= */
+
+.sound {
+    margin: 35px 0;
+
+    text-align: center;
+
+    color: #aaa;
+
+    font-size: 28px;
+
+    letter-spacing: 8px;
+
+    animation: shake 3s infinite;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+.chat {
+    margin: 40px 0;
+}
+
+.message {
+    width: fit-content;
+    max-width: 75%;
+
+    padding: 12px 18px;
+    margin: 14px 0;
+
+    border-radius: 5px;
+
+    line-height: 1.6;
+
+    background: #151515;
+
+    box-shadow: 0 5px 20px #000;
+}
+
+.message small {
+    display: block;
+
+    color: #777;
+
+    margin-bottom: 4px;
+}
+
+.left {
+    border-left: 3px solid #333;
+}
+
+.right {
+    margin-left: auto;
+
+    border-right: 3px solid #520000;
+
+    background: #190909;
+}
+
+
+/* =========================
+   PHONE
+========================= */
+
+.phone {
+    margin: 45px 0;
+
+    padding: 25px;
+
+    background: #080808;
+
+    border: 1px solid #333;
+
+    box-shadow:
+        inset 0 0 30px #000,
+        0 0 30px rgba(0,0,0,.8);
+}
+
+.phone span {
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.phone p {
+    color: #bbb;
+    margin: 15px 0;
+}
+
+.danger {
+    border-color: #550000;
+
+    animation: phoneGlow 3s infinite;
+}
+
+
+/* =========================
+   DOOR
+========================= */
+
+.door {
+    margin: 50px auto;
+
+    width: 250px;
+    height: 330px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 5px solid #171717;
+
+    background:
+        linear-gradient(
+            90deg,
+            #080808,
+            #222,
+            #090909
+        );
+
+    color: #720000;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 0 40px #000,
+        inset 0 0 50px #000;
+}
+
+
+/* =========================
+   MIRROR
+========================= */
+
+.mirror-text {
+    margin: 60px auto;
+
+    padding: 35px;
+
+    width: 80%;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 24px;
+
+    border: 1px solid #292929;
+
+    background: rgba(255,255,255,.015);
+
+    text-shadow: 0 0 8px #777;
+
+    transform: rotate(-1deg);
+}
+
+.big {
+    font-size: 40px;
+    color: #900000;
+
+    animation: flicker 2s infinite;
+}
+
+
+/* =========================
+   WHISPER
+========================= */
+
+.whisper {
+    margin: 45px 0;
+
+    text-align: center;
+
+    color: #9c0000;
+
+    font-size: 22px;
+
+    font-style: italic;
+
+    text-shadow: 0 0 12px #4a0000;
+
+    animation: whisper 2s infinite;
+}
+
+
+/* =========================
+   GLITCH
+========================= */
+
+.glitch {
+    margin: 60px 0;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #b00000;
+
+    border: 1px solid #3a0000;
+
+    letter-spacing: 5px;
+
+    animation: glitch 1.5s infinite;
+}
+
+
+/* =========================
+   PHOTO
+========================= */
+
+.photo-warning {
+    margin: 60px auto;
+
+    padding: 40px;
+
+    width: 300px;
+
+    text-align: center;
+
+    background: #111;
+
+    border: 1px solid #333;
+
+    color: #a00000;
+
+    transform: rotate(2deg);
+
+    box-shadow: 10px 15px 40px #000;
+}
+
+
+/* =========================
+   GRAVEYARD MESSAGE
+========================= */
+
+.graveyard-message {
+    margin: 100px 0;
+
+    padding: 100px 20px;
+
+    text-align: center;
+
+    font-family: "Creepster", cursive;
+
+    font-size: 80px;
+
+    color: #530000;
+
+    text-shadow:
+        0 0 20px #120000,
+        0 0 60px #000;
+
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+.final {
+    margin-top: 100px;
+
+    padding: 50px;
+
+    border: 1px solid #450000;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(80,0,0,.15),
+            transparent
+        );
+}
+
+.red {
+    color: #a00000;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================
+   CASE STATUS
+========================= */
+
+.case-status {
+    margin: 120px 0;
+
+    padding: 40px;
+
+    background: #070707;
+
+    border: 1px solid #333;
+
+    box-shadow: 0 0 60px #000;
+}
+
+.case-status h2 {
+    margin-top: 10px;
+}
+
+.case-status span {
+    color: #a00000;
+
+    animation: pulse 1s infinite;
+}
+
+.case-status hr {
+    border: 0;
+    border-top: 1px solid #333;
+
+    margin: 30px 0;
+}
+
+.final-message {
+    text-align: center;
+
+    color: #888;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    position: relative;
+    z-index: 5;
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: #444;
+
+    border-top: 1px solid #222;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes flicker {
+    0%, 18%, 22%, 63%, 64%, 65%, 100% {
+        opacity: 1;
+    }
+
+    20%, 62% {
+        opacity: .35;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .35;
+    }
+}
+
+@keyframes shake {
+    0%, 90%, 100% {
+        transform: translateX(0);
+    }
+
+    92% {
+        transform: translateX(-4px);
+    }
+
+    94% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes phoneGlow {
+    50% {
+        box-shadow: 0 0 30px rgba(100,0,0,.25);
+    }
+}
+
+@keyframes whisper {
+    0%, 100% {
+        opacity: .45;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(3px);
+    }
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-3px);
+    }
+
+    40% {
+        transform: translateX(3px);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .story {
+        padding: 25px;
+
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 65px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .mirror-text {
+        width: 100%;
+    }
+
+    .graveyard-message {
+        font-size: 50px;
+    }
+}
+
+</style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- DARK BACKGROUND -->
+    <div class="fog"></div>
+    <div class="noise"></div>
+
+    <!-- HEADER -->
+    <header>
+        <p class="classified">[ TOP SECRET / RESTRICTED ]</p>
+
+        <h1>THE WHISPERING ROOM</h1>
+
+        <p class="case">CASE FILE #001</p>
+        <p class="room">ROOM NO. 17</p>
+    </header>
+
+
+    <!-- STORY -->
+    <main>
+
+        <section class="warning">
+            <span>⚠</span>
+            <p>
+                IF YOU HEAR A WHISPER...<br>
+                DO NOT ANSWER.
+            </p>
+        </section>
+
+
+        <section class="story">
+
+            <p class="time">12:07 AM</p>
+
+            <p>
+                Aaj raat mujhe ek purani building ke baare mein pata chala...
+            </p>
+
+            <p>
+                Log usse <b>Blackwood House</b> kehte hain.
+            </p>
+
+            <p>
+                Building almost 70 saal se band hai.
+            </p>
+
+            <p>
+                Lekin ajeeb baat ye hai...
+            </p>
+
+            <p>
+                Har raat exactly <b>12:17 AM</b> par uski third floor ki
+                ek window mein light jalti hai.
+            </p>
+
+            <p>
+                Aur us window ke peeche...
+            </p>
+
+            <h2>ROOM NO. 17</h2>
+
+
+            <!-- WHATSAPP CHAT -->
+
+            <div class="chat">
+
+                <div class="message left">
+                    <small>A</small>
+                    bhai tu serious hai kya? 😐
+                </div>
+
+                <div class="message right">
+                    <small>Me</small>
+                    haan
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    raat ke 12 baje abandoned building mein jayega?
+                </div>
+
+                <div class="message right">
+                    <small>Me</small>
+                    sirf dekh ke aaunga 😂
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    agar kuch hua na toh mujhe call mat karna
+                </div>
+
+                <div class="message right">
+                    <small>Me</small>
+                    kyu?
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    kyuki main phone hi band kar dunga 💀
+                </div>
+
+            </div>
+
+
+            <p class="time">12:16 AM</p>
+
+            <p>
+                Main third floor ki stairs chadh raha tha.
+            </p>
+
+            <p>1st floor...</p>
+            <p>2nd floor...</p>
+            <p>3rd floor...</p>
+
+            <p>
+                Jaise hi last step par pair rakha...
+            </p>
+
+            <div class="sound">TAP.</div>
+
+            <p>
+                Kisi ne peeche se floor par pair rakha.
+            </p>
+
+            <p>
+                Main turant mud gaya.
+            </p>
+
+            <p class="silence">...</p>
+
+            <p>
+                Kuch nahi tha.
+            </p>
+
+
+            <div class="phone">
+
+                <span>UNKNOWN NUMBER</span>
+
+                <p>
+                    "DON'T TURN AROUND."
+                </p>
+
+                <p>
+                    "IT HEARS YOU."
+                </p>
+
+            </div>
+
+
+            <p class="time">12:17 AM</p>
+
+            <p>
+                Third floor ke end mein ek door dikha.
+            </p>
+
+            <div class="door">
+                ROOM 17
+            </div>
+
+            <p>
+                Door locked nahi tha.
+            </p>
+
+            <p>
+                Maine handle touch kiya.
+            </p>
+
+            <div class="sound">CLICK.</div>
+
+            <p>
+                Door khul gaya.
+            </p>
+
+            <p>
+                Room bilkul empty tha.
+            </p>
+
+            <p>
+                Ek chair.<br>
+                Ek purana table.<br>
+                Aur saamne wall par ek bada sa mirror.
+            </p>
+
+
+            <div class="mirror-text">
+                DON'T LISTEN.<br><br>
+                DON'T ANSWER.<br><br>
+                DON'T WHISPER BACK.
+            </div>
+
+
+            <p class="time">12:27 AM</p>
+
+            <p>
+                Achanak...
+            </p>
+
+            <div class="sound">KNOCK.</div>
+
+            <p>
+                Door par knock hua.
+            </p>
+
+            <div class="sound">KNOCK.</div>
+
+            <p>
+                Doosri baar.
+            </p>
+
+            <p>
+                Phir bahar se meri hi awaaz aayi...
+            </p>
+
+            <div class="whisper">
+                "Bhai... door khol."
+            </div>
+
+
+            <div class="phone danger">
+
+                <span>UNKNOWN NUMBER</span>
+
+                <p>
+                    "THAT ISN'T YOU."
+                </p>
+
+            </div>
+
+
+            <p class="time">12:36 AM</p>
+
+            <p>
+                Phone automatically camera mode mein chala gaya.
+            </p>
+
+            <p>
+                Screen par mera face tha.
+            </p>
+
+            <p>
+                Lekin mere peeche...
+            </p>
+
+            <h2>EK SHADOW KHADI THI.</h2>
+
+
+            <p>
+                Main turant peeche dekha.
+            </p>
+
+            <p>
+                Nothing.
+            </p>
+
+            <p>
+                Camera dobara dekha.
+            </p>
+
+            <p>
+                Shadow ab bhi thi.
+            </p>
+
+
+            <div class="glitch">
+                IT WAS GETTING CLOSER.
+            </div>
+
+
+            <p class="time">12:44 AM</p>
+
+            <p>
+                Reflection mujhe dekh raha tha.
+            </p>
+
+            <p>
+                Main still tha.
+            </p>
+
+            <p>
+                Woh bhi still tha.
+            </p>
+
+            <p>
+                Phir reflection ne dheere se smile ki.
+            </p>
+
+            <p class="red">
+                MAINE SMILE NAHI KI THI.
+            </p>
+
+
+            <div class="mirror-text big">
+                DON'T BLINK.
+            </div>
+
+
+            <p class="time">12:47 AM</p>
+
+            <p>
+                Door suddenly unlock ho gaya.
+            </p>
+
+            <div class="sound">CLICK.</div>
+
+            <p>
+                Main bina peeche dekhe room se bahar bhaaga.
+            </p>
+
+            <p>
+                Lekin stairs par pahunch kar...
+            </p>
+
+            <p>
+                main neeche ja hi nahi raha tha.
+            </p>
+
+            <p>
+                Har baar main wahi third floor ke corridor mein aa raha tha.
+            </p>
+
+            <p>
+                Aur har baar...
+            </p>
+
+
+            <h2>ROOM 17 MERE SAAMNE THA.</h2>
+
+
+            <p class="time">12:53 AM</p>
+
+            <p>
+                Corridor ki walls par dozens of photographs lagi thi.
+            </p>
+
+            <p>
+                Har photograph mein koi na koi person Room 17 ke saamne
+                khada tha.
+            </p>
+
+            <p>
+                Kuch photographs bahut purani thi.
+            </p>
+
+            <p>
+                Aur last photograph...
+            </p>
+
+
+            <div class="photo-warning">
+                MERI THI.
+                <br><br>
+                03 / 09 / 2026
+            </div>
+
+
+            <p class="time">1:04 AM</p>
+
+            <div class="chat">
+
+                <div class="message right">
+                    <small>Me</small>
+                    bhai main bahar aa gaya 😭
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    kahan hai tu?
+                </div>
+
+                <div class="message right">
+                    <small>Me</small>
+                    blackwood house ke bahar
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    bhai...
+                    <br><br>
+                    Blackwood House naam ki koi building hai hi nahi.
+                </div>
+
+                <div class="message left">
+                    <small>A</small>
+                    yahan sirf ek purana graveyard hai.
+                </div>
+
+            </div>
+
+
+            <div class="graveyard-message">
+                ROOM 17
+            </div>
+
+
+            <p class="time">1:07 AM</p>
+
+            <div class="phone danger">
+
+                <span>UNKNOWN NUMBER</span>
+
+                <p>
+                    "YOU LEFT THE ROOM..."
+                </p>
+
+                <p>
+                    "...BUT THE ROOM DIDN'T LEAVE YOU."
+                </p>
+
+            </div>
+
+
+            <div class="final">
+
+                <h2>THE END?</h2>
+
+                <p>
+                    Main ghar aa gaya.
+                </p>
+
+                <p>
+                    Lekin agle din raat...
+                </p>
+
+                <p>
+                    exactly <b>12:17 AM</b> par...
+                </p>
+
+                <div class="sound">KNOCK.</div>
+
+                <div class="sound">KNOCK.</div>
+
+                <div class="sound">KNOCK.</div>
+
+                <p>
+                    Mere bedroom ke door par knock hua.
+                </p>
+
+                <div class="whisper">
+                    "Bhai... door khol."
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CASE STATUS -->
+
+        <section class="case-status">
+
+            <h2>CASE FILE STATUS</h2>
+
+            <p><b>SUBJECT:</b> UNKNOWN</p>
+            <p><b>LOCATION:</b> UNKNOWN</p>
+            <p><b>ROOM:</b> 17</p>
+            <p><b>STATUS:</b> <span>ACTIVE</span></p>
+
+            <hr>
+
+            <p class="final-message">
+                "WHISPERS DON'T COME FROM THE ROOM."
+            </p>
+
+            <p class="final-message">
+                "THEY COME FROM THE PEOPLE WHO LEFT IT."
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        CASE FILE #001 — ACCESS RESTRICTED
+    </footer>
+
+</body>
+</html>

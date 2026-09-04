@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE BLACK FILES</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap');
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #050505;
+    color: #ddd;
+    font-family: "Share Tech Mono", monospace;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   NOISE EFFECT
+========================= */
+
+.noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+
+    opacity: 0.08;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            transparent 0,
+            #fff 1px,
+            transparent 2px
+        );
+
+    background-size: 5px 5px;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding: 20px 7%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.9);
+
+    border-bottom: 1px solid #330000;
+
+    z-index: 100;
+}
+
+.logo {
+    font-size: 24px;
+    color: white;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #8b0000;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #777;
+    text-decoration: none;
+
+    font-size: 13px;
+    letter-spacing: 2px;
+
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ff1a1a;
+
+    text-shadow:
+        0 0 10px red,
+        0 0 20px red;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #250000 0%,
+            #090000 35%,
+            #000 75%
+        );
+
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.95)
+        );
+}
+
+
+/* =========================
+   HERO CONTENT
+========================= */
+
+.hero-content {
+    position: relative;
+
+    text-align: center;
+
+    z-index: 2;
+}
+
+.classified {
+    color: #a00000;
+
+    font-size: 14px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 25px;
+
+    animation: blink 2s infinite;
+}
+
+.hero h1 {
+    font-family: "Creepster", cursive;
+
+    font-size: clamp(70px, 12vw, 170px);
+
+    color: #ddd;
+
+    letter-spacing: 8px;
+
+    position: relative;
+
+    text-shadow:
+        0 0 5px #fff,
+        0 0 15px #500000,
+        0 0 40px #900000;
+
+    animation: flicker 4s infinite;
+}
+
+
+/* GLITCH */
+
+.hero h1::before,
+.hero h1::after {
+    content: attr(data-text);
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    overflow: hidden;
+}
+
+.hero h1::before {
+    color: #ff0000;
+
+    transform: translate(3px, -2px);
+
+    clip-path: inset(0 0 65% 0);
+
+    animation: glitch 2s infinite;
+}
+
+.hero h1::after {
+    color: #00ffff;
+
+    transform: translate(-3px, 2px);
+
+    clip-path: inset(60% 0 0 0);
+
+    animation: glitch 1.5s infinite;
+}
+
+
+.subtitle {
+    margin: 25px 0;
+
+    color: #777;
+
+    letter-spacing: 5px;
+
+    font-size: 14px;
+}
+
+button {
+    margin-top: 30px;
+
+    padding: 15px 35px;
+
+    background: transparent;
+
+    border: 1px solid #8b0000;
+
+    color: #ccc;
+
+    font-family: inherit;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #8b0000;
+
+    color: white;
+
+    box-shadow:
+        0 0 20px #8b0000,
+        0 0 50px #400000;
+}
+
+
+/* =========================
+   BLOOD
+========================= */
+
+.blood {
+    position: absolute;
+
+    bottom: -100px;
+
+    width: 500px;
+    height: 300px;
+
+    background: #5c0000;
+
+    filter: blur(70px);
+
+    opacity: 0.5;
+}
+
+
+/* =========================
+   FILE SECTION
+========================= */
+
+.files {
+    min-height: 100vh;
+
+    padding: 130px 7%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #050505,
+            #100000,
+            #050505
+        );
+}
+
+.section-label {
+    color: #7c0000;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+.files h2 {
+    text-align: center;
+
+    font-family: "Creepster", cursive;
+
+    font-size: 60px;
+
+    color: #eee;
+
+    margin-bottom: 60px;
+}
+
+
+/* =========================
+   FILE CARDS
+========================= */
+
+.file-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.file-card {
+    position: relative;
+
+    min-height: 320px;
+
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #151515,
+            #080808
+        );
+
+    border: 1px solid #292929;
+
+    transition: 0.4s;
+
+    overflow: hidden;
+}
+
+.file-card:hover {
+    transform: translateY(-10px);
+
+    border-color: #850000;
+
+    box-shadow:
+        0 20px 50px rgba(100,0,0,0.4);
+}
+
+.file-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background: #600000;
+}
+
+.file-card span {
+    color: #777;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+}
+
+.file-card h3 {
+    margin: 25px 0 20px;
+
+    color: #ddd;
+
+    font-size: 25px;
+}
+
+.file-card p {
+    color: #777;
+
+    line-height: 1.8;
+
+    font-size: 14px;
+}
+
+.file-card a {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    color: #a00000;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+}
+
+.file-card a:hover {
+    color: red;
+}
+
+
+/* SECRET STAMP */
+
+.stamp {
+    position: absolute;
+
+    top: 20px;
+    right: -30px;
+
+    padding: 5px 30px;
+
+    border: 1px solid #770000;
+
+    color: #770000;
+
+    transform: rotate(12deg);
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+   SECRET SECTION
+========================= */
+
+.secret {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle,
+            #220000,
+            #030303 70%
+        );
+
+    text-align: center;
+}
+
+.secret-box {
+    max-width: 800px;
+
+    padding: 50px;
+
+    border: 1px solid #250000;
+
+    box-shadow:
+        0 0 100px rgba(100,0,0,0.2);
+}
+
+.secret-box > p:first-child {
+    color: red;
+
+    letter-spacing: 6px;
+
+    animation: blink 1s infinite;
+}
+
+.secret h2 {
+    margin: 30px 0;
+
+    font-family: "Creepster", cursive;
+
+    font-size: clamp(40px, 7vw, 80px);
+
+    color: #ddd;
+}
+
+.eye {
+    font-size: 80px;
+
+    color: #a00000;
+
+    animation: eye 3s infinite;
+
+    text-shadow:
+        0 0 20px red;
+}
+
+.small-text {
+    margin-top: 30px;
+
+    color: #555;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   WARNING
+========================= */
+
+.warning {
+    padding: 130px 7%;
+
+    background: #080000;
+
+    border-top: 1px solid #300000;
+
+    border-bottom: 1px solid #300000;
+}
+
+.warning-content {
+    max-width: 800px;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+.warning-icon {
+    font-size: 60px;
+
+    color: #900000;
+
+    text-shadow:
+        0 0 20px red;
+}
+
+.warning h2 {
+    margin: 20px;
+
+    font-size: 55px;
+
+    color: #a00000;
+
+    letter-spacing: 8px;
+}
+
+.warning p {
+    color: #777;
+
+    line-height: 2;
+}
+
+.terminal {
+    margin-top: 40px;
+
+    padding: 25px;
+
+    background: #020202;
+
+    border: 1px solid #222;
+
+    text-align: left;
+
+    color: #555;
+
+    line-height: 2;
+}
+
+.terminal span {
+    color: #a00000;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 40px;
+
+    text-align: center;
+
+    background: #020202;
+
+    color: #444;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    line-height: 2;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes blink {
+
+    0%, 45%, 55%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+
+@keyframes flicker {
+
+    0%, 18%, 22%, 63%, 64%, 65%, 100% {
+        opacity: 1;
+    }
+
+    20%, 62% {
+        opacity: 0.5;
+    }
+}
+
+
+@keyframes glitch {
+
+    0% {
+        clip-path: inset(0 0 100% 0);
+    }
+
+    20% {
+        clip-path: inset(20% 0 40% 0);
+    }
+
+    40% {
+        clip-path: inset(70% 0 10% 0);
+    }
+
+    60% {
+        clip-path: inset(40% 0 30% 0);
+    }
+
+    80% {
+        clip-path: inset(80% 0 5% 0);
+    }
+
+    100% {
+        clip-path: inset(0 0 100% 0);
+    }
+}
+
+
+@keyframes eye {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+
+        color: red;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    header {
+        padding: 18px 5%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 65px;
+
+        letter-spacing: 3px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+
+        padding: 0 20px;
+    }
+
+    .file-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .files h2 {
+        font-size: 45px;
+    }
+
+    .secret-box {
+        margin: 20px;
+
+        padding: 30px 20px;
+    }
+
+}
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="noise"></div>
+    <header>
+        <div class="logo">BLACK<span>FILES</span></div>
+
+        <nav>
+            <a href="#home">HOME</a>
+            <a href="#files">FILES</a>
+            <a href="#secrets">SECRETS</a>
+            <a href="#warning">WARNING</a>
+            <a href="#open at your own risk">open at your own risk</a>
+        </nav>
+    </header>
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <p class="classified">[ CLASSIFIED ACCESS ONLY ]</p>
+
+            <h1 data-text="WELCOME TO HELL">
+                WELCOME TO HELL
+            </h1>
+
+            <p class="subtitle">
+                SOME SECRETS WERE NEVER MEANT TO BE FOUND.
+            </p>
+
+            <button onclick="document.getElementById('files').scrollIntoView()">
+                ENTER THE DARKNESS
+            </button>
+
+        </div>
+
+        <div class="blood"></div>
+
+    </section>
+    <section class="files" id="files">
+
+        <p class="section-label">/// CLASSIFIED DATABASE ///</p>
+
+        <h2>FORBIDDEN FILES</h2>
+
+        <div class="file-grid">
+
+            <article class="file-card">
+                <div class="stamp">TOP SECRET</div>
+
+                <span>FILE #001</span>
+
+                <h3>THE WHISPERING ROOM</h3>
+
+                <p>
+                    Witnesses reported hearing voices from an empty
+                    room at exactly 3:17 AM.
+                </p>
+
+                <a href="whispering-room.html">OPEN FILE →</a>
+            </article>
+
+            <article class="file-card">
+         <div class="stamp">RESTRICTED</div>
+
+        <span>FILE #013</span>
+
+        <h3>THE MISSING MAN</h3>
+
+        <p>
+        He disappeared seventeen years ago.
+        Yesterday, his photograph appeared on a security camera.
+         </p>
+
+          <a href="missing-man.html">OPEN FILE →</a>
+           </article>
+
+
+            <article class="file-card">
+                <div class="stamp">CLASSIFIED</div>
+
+                <span>FILE #666</span>
+
+                <h3>PROJECT NIGHTFALL</h3>
+
+                <p>
+                    A government experiment that officially never existed.
+                    Every record has been erased.
+                </p>
+
+                <a href="#">OPEN FILE →</a>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section class="secret" id="secrets">
+
+        <div class="secret-box">
+
+            <p>YOU SHOULD NOT BE HERE.</p>
+
+            <h2>THERE IS SOMETHING<br>BEHIND THE SCREEN.</h2>
+
+            <div class="eye">
+                ◉
+            </div>
+
+            <p class="small-text">
+                If you can see this message, the system has already noticed you.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="warning" id="warning">
+
+        <div class="warning-content">
+
+            <span class="warning-icon">☠</span>
+
+            <h2>WARNING</h2>
+
+            <p>
+                The information contained within this archive is
+                considered dangerous.
+            </p>
+
+            <p>
+                Accessing restricted files may have consequences.
+            </p>
+
+            <div class="terminal">
+                ☠ SYSTEM STATUS: <span>UNSTABLE</span><br>
+                ☠ SECURITY: <span>COMPROMISED</span><br>
+                ☠ UNKNOWN ENTITY: <span>DETECTED</span><br>
+                ☠ YOUR LOCATION: <span>UNKNOWN</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>
+            © 2026 THE BLACK FILES
+        </p>
+
+        <p>
+            SOME TRUTHS ARE BETTER LEFT BURIED.
+        </p>
+
+    </footer>
+
+</body>
+</html>
