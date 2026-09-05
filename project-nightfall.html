@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>THE NIGHTFALL | THE BLACK FILES</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.92)),
+        url("nightfall.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:#ddd;
+    font-family:"Share Tech Mono",monospace;
+    min-height:100vh;
+}
+
+
+/* =========================
+   FOG
+========================= */
+
+.fog{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 20% 30%,rgba(255,255,255,.05),transparent 30%),
+        radial-gradient(circle at 80% 70%,rgba(255,0,0,.04),transparent 30%);
+    animation:fogMove 10s infinite alternate;
+    z-index:1;
+}
+
+@keyframes fogMove{
+    from{opacity:.35;}
+    to{opacity:.75;}
+}
+
+
+/* =========================
+   NOISE
+========================= */
+
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.06;
+    z-index:10;
+
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    background:
+        radial-gradient(circle,
+        rgba(120,0,0,.30),
+        transparent 55%);
+}
+
+.classified{
+    color:#b30000;
+    letter-spacing:6px;
+    font-size:14px;
+    animation:flicker 3s infinite;
+}
+
+h1{
+    font-family:"Creepster",cursive;
+    font-size:clamp(70px,13vw,170px);
+    color:#8b0000;
+
+    text-shadow:
+        0 0 10px #400000,
+        0 0 30px #200000;
+
+    letter-spacing:8px;
+}
+
+.case{
+    color:#aaa;
+    letter-spacing:4px;
+    margin-top:10px;
+}
+
+.subject{
+    margin-top:25px;
+    color:#700000;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+    width:90%;
+    max-width:900px;
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
+
+.warning{
+    border:1px solid #720000;
+    background:rgba(50,0,0,.25);
+
+    padding:20px;
+    margin:40px 0;
+
+    color:#d00000;
+    text-align:center;
+
+    letter-spacing:2px;
+
+    box-shadow:0 0 20px rgba(100,0,0,.2);
+
+    animation:pulse 3s infinite;
+}
+
+
+/* =========================
+   STORY
+========================= */
+
+.story{
+    background:rgba(0,0,0,.70);
+
+    border-left:2px solid #520000;
+
+    padding:35px;
+    margin-bottom:30px;
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,.8);
+}
+
+.story h2{
+    font-family:"Creepster",cursive;
+
+    color:#9b0000;
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+    letter-spacing:3px;
+}
+
+.story p{
+    line-height:1.9;
+    margin:18px 0;
+
+    color:#bbb;
+}
+
+.time{
+    color:#7d0000;
+    font-size:13px;
+    letter-spacing:2px;
+    margin-top:25px;
+}
+
+
+/* =========================
+   SOUND
+========================= */
+
+.sound{
+    text-align:center;
+
+    color:#777;
+
+    font-style:italic;
+
+    padding:20px;
+
+    letter-spacing:3px;
+
+    animation:whisper 4s infinite;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+    margin:30px 0;
+}
+
+.message{
+    max-width:75%;
+
+    padding:15px;
+
+    margin:12px 0;
+
+    border-radius:5px;
+
+    font-size:14px;
+
+    line-height:1.6;
+}
+
+.left{
+    background:#151515;
+    border-left:3px solid #555;
+    margin-right:auto;
+}
+
+.right{
+    background:#260000;
+    border-right:3px solid #850000;
+    margin-left:auto;
+
+    color:#ddd;
+}
+
+
+/* =========================
+   NIGHT ROOM
+========================= */
+
+.room{
+    border:1px solid #3b0000;
+
+    padding:30px;
+
+    margin:30px 0;
+
+    background:
+        radial-gradient(circle,
+        rgba(100,0,0,.10),
+        transparent 60%);
+}
+
+.room-title{
+    text-align:center;
+
+    color:#850000;
+
+    font-family:"Creepster",cursive;
+
+    font-size:50px;
+
+    margin-bottom:20px;
+}
+
+
+/* =========================
+   UNKNOWN MESSAGE
+========================= */
+
+.phone{
+    background:#050505;
+
+    border:1px solid #333;
+
+    padding:20px;
+
+    margin:25px auto;
+
+    max-width:500px;
+
+    box-shadow:0 0 25px rgba(100,0,0,.2);
+}
+
+.phone-top{
+    color:#555;
+    border-bottom:1px solid #222;
+
+    padding-bottom:10px;
+
+    margin-bottom:15px;
+}
+
+.phone-msg{
+    color:#b40000;
+
+    line-height:2;
+
+    animation:phoneGlow 2s infinite;
+}
+
+@keyframes phoneGlow{
+    0%,100%{opacity:.7;}
+    50%{opacity:1;}
+}
+
+
+/* =========================
+   BIG TEXT
+========================= */
+
+.big{
+    text-align:center;
+
+    font-family:"Creepster",cursive;
+
+    font-size:55px;
+
+    color:#8b0000;
+
+    margin:40px 0;
+
+    animation:shake 5s infinite;
+}
+
+
+/* =========================
+   WHISPER
+========================= */
+
+.whisper{
+    text-align:center;
+
+    font-size:20px;
+
+    color:#777;
+
+    letter-spacing:5px;
+
+    margin:40px 0;
+
+    animation:whisper 3s infinite;
+}
+
+@keyframes whisper{
+    0%,100%{
+        opacity:.25;
+        transform:translateX(0);
+    }
+
+    50%{
+        opacity:1;
+        transform:translateX(4px);
+    }
+}
+
+
+/* =========================
+   GLITCH
+========================= */
+
+.glitch{
+    text-align:center;
+
+    font-size:30px;
+
+    color:#a00000;
+
+    letter-spacing:5px;
+
+    margin:40px 0;
+
+    animation:glitch 1.5s infinite;
+}
+
+@keyframes glitch{
+
+    0%{
+        transform:translate(0);
+    }
+
+    20%{
+        transform:translate(-2px,2px);
+    }
+
+    40%{
+        transform:translate(2px,-2px);
+    }
+
+    60%{
+        transform:translate(-1px,1px);
+    }
+
+    80%{
+        transform:translate(1px,-1px);
+    }
+
+    100%{
+        transform:translate(0);
+    }
+}
+
+
+/* =========================
+   FINAL FILE
+========================= */
+
+.final{
+    border:1px solid #700000;
+
+    background:
+        linear-gradient(
+        rgba(50,0,0,.25),
+        rgba(0,0,0,.8)
+        );
+
+    padding:35px;
+
+    margin:50px 0;
+
+    text-align:center;
+}
+
+.final h2{
+    font-family:"Creepster",cursive;
+
+    font-size:55px;
+
+    color:#a00000;
+
+    margin-bottom:20px;
+}
+
+.red{
+    color:#b00000;
+}
+
+.case-status{
+    margin-top:25px;
+
+    padding:15px;
+
+    border:1px solid #350000;
+
+    color:#700000;
+
+    letter-spacing:3px;
+}
+
+.final-message{
+    margin-top:30px;
+
+    color:#888;
+
+    line-height:2;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+
+    padding:60px 20px;
+
+    color:#333;
+
+    letter-spacing:3px;
+}
+
+footer span{
+    color:#700000;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes flicker{
+
+    0%,18%,22%,25%,53%,57%,100%{
+        opacity:1;
+    }
+
+    20%,24%,55%{
+        opacity:.2;
+    }
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        box-shadow:0 0 5px rgba(100,0,0,.2);
+    }
+
+    50%{
+        box-shadow:0 0 25px rgba(120,0,0,.4);
+    }
+}
+
+@keyframes shake{
+
+    0%,90%,100%{
+        transform:translateX(0);
+    }
+
+    92%{
+        transform:translateX(-3px);
+    }
+
+    94%{
+        transform:translateX(3px);
+    }
+
+    96%{
+        transform:translateX(-2px);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    h1{
+        font-size:70px;
+    }
+
+    .story{
+        padding:22px;
+    }
+
+    .story h2{
+        font-size:34px;
+    }
+
+    .message{
+        max-width:90%;
+    }
+
+    .big{
+        font-size:40px;
+    }
+
+    .glitch{
+        font-size:22px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="fog"></div>
+<div class="noise"></div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="classified">
+        [ TOP SECRET / RESTRICTED ]
+    </div>
+
+    <h1>THE NIGHTFALL</h1>
+
+    <div class="case">
+        CASE FILE #021
+    </div>
+
+    <div class="subject">
+        SUBJECT: UNKNOWN
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- WARNING -->
+
+<div class="warning">
+    THIS FILE WAS RECOVERED FROM A DEVICE THAT SHOULD HAVE BEEN EMPTY.
+</div>
+
+
+<!-- STORY -->
+
+<section class="story">
+
+<h2>THE NIGHT IT BEGAN</h2>
+
+<p>
+Nobody remembered the exact moment the night changed.
+There was no storm.
+No warning.
+No strange sound.
+The entire town simply became unusually quiet.
+</p>
+
+<p>
+At exactly 11:47 PM, every clock in the area stopped.
+Phones lost their signals.
+Street lights began turning off one by one.
+</p>
+
+<div class="time">
+[ 11:47 PM ]
+</div>
+
+<div class="sound">
+...silence...
+</div>
+
+<p>
+Then one light appeared at the end of the empty road.
+It remained there for exactly thirteen seconds.
+</p>
+
+</section>
+
+
+<!-- ROOM -->
+
+<section class="story">
+
+<div class="room-title">
+THE EMPTY HOUSE
+</div>
+
+<p>
+The investigation led to an abandoned house at the edge of the town.
+The house had been locked for years.
+</p>
+
+<p>
+There were no footprints outside.
+No broken windows.
+Nothing suggested that anyone had entered.
+</p>
+
+<div class="big">
+BUT THE DOOR WAS OPEN.
+</div>
+
+</section>
+
+
+<!-- PHONE -->
+
+<section class="story">
+
+<h2>THE PHONE</h2>
+
+<p>
+Inside the house, investigators found an old phone lying on a table.
+It had no SIM card.
+It was not connected to electricity.
+</p>
+
+<div class="phone">
+
+<div class="phone-top">
+UNKNOWN NUMBER
+</div>
+
+<div class="phone-msg">
+11:58 PM<br><br>
+DON'T TURN AROUND.
+</div>
+
+</div>
+
+<p>
+The investigator ignored the message.
+A second message arrived.
+</p>
+
+<div class="phone">
+
+<div class="phone-msg">
+11:59 PM<br><br>
+YOU ALREADY DID.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CHAT -->
+
+<section class="story">
+
+<h2>RECOVERED CHAT</h2>
+
+<div class="chat">
+
+<div class="message left">
+Who is this?
+</div>
+
+<div class="message right">
+You shouldn't be there.
+</div>
+
+<div class="message left">
+Who are you?
+</div>
+
+<div class="message right">
+Look at the clock.
+</div>
+
+<div class="message left">
+It's stopped.
+</div>
+
+<div class="message right">
+Exactly.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHISPER -->
+
+<section class="story">
+
+<div class="whisper">
+"THE NIGHT HASN'T ENDED."
+</div>
+
+<p>
+The recording became difficult to understand after this point.
+The audio contained several seconds of silence.
+</p>
+
+<p>
+Then a faint voice could be heard repeating the same sentence.
+</p>
+
+<div class="glitch">
+IT'S STILL NIGHT.
+</div>
+
+</section>
+
+
+<!-- SECOND DISCOVERY -->
+
+<section class="story">
+
+<h2>12:13 AM</h2>
+
+<p>
+At 12:13 AM, the investigator noticed something unusual.
+The clock on the wall had started moving again.
+</p>
+
+<p>
+But the time was not 12:13.
+</p>
+
+<div class="big">
+11:47
+</div>
+
+<p>
+The same time from the beginning of the incident.
+</p>
+
+<p>
+The entire night appeared to be repeating.
+</p>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+<h2>FINAL ARCHIVE</h2>
+
+<p>
+The house was searched again the following morning.
+Nothing was found.
+</p>
+
+<p>
+The phone was missing.
+The clock was missing.
+And the investigator's recording contained only one final sentence.
+</p>
+
+<div class="whisper">
+"IF YOU FOUND THIS FILE..."
+</div>
+
+<div class="red">
+DO NOT WAIT FOR NIGHTFALL.
+</div>
+
+<div class="case-status">
+CASE STATUS: UNSOLVED
+</div>
+
+<div class="final-message">
+THE BLACK FILES ARCHIVE<br>
+FILE #021<br><br>
+LAST ENTRY RECORDED: 11:47 PM
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+THE BLACK FILES<br>
+<span>UNKNOWN DOES NOT MEAN IMAGINARY.</span>
+
+</footer>
+
+</body>
+</html>
