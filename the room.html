@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASE #002 — THE ROOM THAT WASN'T THERE</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #030303;
+            color: #ccc;
+            font-family: "Share Tech Mono", monospace;
+            overflow-x: hidden;
+        }
+
+        /* NOISE */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+
+            opacity: 0.07;
+
+            background-image:
+                repeating-radial-gradient(
+                    circle at 0 0,
+                    transparent 0,
+                    #fff 1px,
+                    transparent 2px
+                );
+
+            background-size: 5px 5px;
+        }
+
+        /* HEADER */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            padding: 20px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0,0,0,0.92);
+
+            border-bottom: 1px solid #330000;
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            letter-spacing: 4px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #8b0000;
+        }
+
+        header a {
+            color: #777;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        header a:hover {
+            color: red;
+            text-shadow: 0 0 15px red;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 120px 20px;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #250000,
+                    #080000 35%,
+                    #000 75%
+                );
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.45),
+                    rgba(0,0,0,0.95)
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .classified {
+            color: #a00000;
+
+            letter-spacing: 5px;
+            font-size: 14px;
+
+            margin-bottom: 25px;
+
+            animation: blink 2s infinite;
+        }
+
+        .case-number {
+            color: #666;
+            letter-spacing: 5px;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-family: "Creepster", cursive;
+
+            font-size: clamp(55px, 10vw, 130px);
+
+            color: #ddd;
+
+            letter-spacing: 6px;
+
+            margin: 15px 0;
+
+            text-shadow:
+                0 0 5px #fff,
+                0 0 20px #500000,
+                0 0 50px #900000;
+
+            animation: flicker 4s infinite;
+        }
+
+        .subtitle {
+            color: #777;
+            letter-spacing: 4px;
+            font-size: 14px;
+        }
+
+        /* FILE INFORMATION */
+
+        .file-info {
+            padding: 80px 7%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #050505,
+                    #100000,
+                    #050505
+                );
+        }
+
+        .info-box {
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 40px;
+
+            border: 1px solid #330000;
+
+            background: #080808;
+
+            box-shadow:
+                0 0 50px rgba(100,0,0,0.15);
+        }
+
+        .info-box p {
+            margin: 15px 0;
+
+            color: #777;
+
+            line-height: 1.7;
+        }
+
+        .info-box span {
+            color: #a00000;
+        }
+
+        /* STORY */
+
+        .story {
+            padding: 100px 7%;
+
+            background: #050505;
+        }
+
+        .story-container {
+            max-width: 900px;
+
+            margin: auto;
+        }
+
+        .section-title {
+            font-family: "Creepster", cursive;
+
+            font-size: 55px;
+
+            color: #ddd;
+
+            margin-bottom: 50px;
+
+            text-shadow: 0 0 20px #500000;
+        }
+
+        .story-block {
+            margin-bottom: 55px;
+
+            padding-left: 25px;
+
+            border-left: 2px solid #500000;
+        }
+
+        .story-block h2 {
+            color: #a00000;
+
+            font-size: 20px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 20px;
+        }
+
+        .story-block p {
+            color: #888;
+
+            line-height: 2;
+
+            font-size: 15px;
+        }
+
+        .quote {
+            margin: 30px 0;
+
+            padding: 25px;
+
+            background: #090909;
+
+            border: 1px solid #250000;
+
+            color: #aaa;
+
+            font-style: italic;
+
+            line-height: 1.8;
+
+            box-shadow: 0 0 30px rgba(100,0,0,0.12);
+        }
+
+        /* FINAL MESSAGE */
+
+        .final {
+            padding: 120px 20px;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #250000,
+                    #020202 70%
+                );
+        }
+
+        .final h2 {
+            font-family: "Creepster", cursive;
+
+            font-size: clamp(45px, 8vw, 90px);
+
+            color: #ddd;
+
+            text-shadow:
+                0 0 10px white,
+                0 0 30px red;
+        }
+
+        .final p {
+            margin-top: 25px;
+
+            color: #700000;
+
+            letter-spacing: 4px;
+
+            animation: blink 2s infinite;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 40px;
+
+            text-align: center;
+
+            background: #020202;
+
+            color: #444;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            line-height: 2;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes blink {
+
+            0%, 45%, 55%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+
+            20%, 62% {
+                opacity: 0.5;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 18px 5%;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .info-box {
+                padding: 25px;
+            }
+
+            .story {
+                padding: 80px 6%;
+            }
+
+            .section-title {
+                font-size: 45px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="noise"></div>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            BLACK<span>FILES</span>
+        </div>
+
+        <a href="index.html">
+            ← BACK TO FILES
+        </a>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="classified">
+                [ CLASSIFIED ACCESS ONLY ]
+            </p>
+
+            <p class="case-number">
+                CASE #002
+            </p>
+
+            <h1>
+                THE ROOM<br>
+                THAT WASN'T THERE
+            </h1>
+
+            <p class="subtitle">
+                SOME DOORS SHOULD NEVER BE OPENED.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FILE INFORMATION -->
+
+    <section class="file-info">
+
+        <div class="info-box">
+
+            <p>
+                CASE:
+                <span>#002</span>
+            </p>
+
+            <p>
+                STATUS:
+                <span>UNSOLVED</span>
+            </p>
+
+            <p>
+                LOCATION:
+                <span>DEAD VALLEY</span>
+            </p>
+
+            <p>
+                INCIDENT TIME:
+                <span>3:17 AM</span>
+            </p>
+
+            <p>
+                CLASSIFICATION:
+                <span>RESTRICTED</span>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- STORY -->
+
+    <section class="story">
+
+        <div class="story-container">
+
+            <h2 class="section-title">
+                INCIDENT REPORT
+            </h2>
+
+
+            <div class="story-block">
+
+                <h2>
+                    NIGHT 01 — 2:13 AM
+                </h2>
+
+                <p>
+                    Dead Valley ke ek purane residential block
+                    mein rehne wale Kabir ne corridor ke end par
+                    ek dark wooden door dekha.
+                </p>
+
+                <p>
+                    Us door par koi apartment number nahi tha.
+                    Sirf ek metal plate lagi thi.
+                </p>
+
+                <div class="quote">
+                    ROOM
+                </div>
+
+                <p>
+                    Kabir ne caretaker ko call kiya.
+                    Kuch seconds tak silence raha.
+                    Phir ek hi sentence sunai diya.
+                </p>
+
+                <div class="quote">
+                    "Us door ko mat kholna."
+                </div>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    NIGHT 02 — 1:47 AM
+                </h2>
+
+                <p>
+                    Agli raat Kabir ne wahi door dobara dekha.
+                    Is baar door ke neeche se halki roshni aa rahi thi.
+                </p>
+
+                <p>
+                    Andar se kisi cheez ko move karne ki awaaz
+                    aa rahi thi.
+                </p>
+
+                <div class="quote">
+                    Knock. Knock. Knock.
+                </div>
+
+                <p>
+                    Kabir ne door par knock kiya.
+                    Kuch seconds tak silence raha.
+                    Phir andar se bilkul wahi teen knocks aaye.
+                </p>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    NIGHT 03 — 3:17 AM
+                </h2>
+
+                <p>
+                    Security camera ne Kabir ko corridor ke end
+                    tak jaate hue record kiya.
+                </p>
+
+                <p>
+                    Woh mysterious door ke saamne ruk gaya.
+                </p>
+
+                <p>
+                    Footage mein Kabir ne door khola...
+                </p>
+
+                <p>
+                    Aur andar chala gaya.
+                </p>
+
+                <p>
+                    Uske baad CCTV signal exactly
+                    <span style="color:#a00000;">
+                        11 minutes
+                    </span>
+                    ke liye disappear ho gaya.
+                </p>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    11 MINUTES LATER
+                </h2>
+
+                <p>
+                    Camera wapas activate hua.
+                </p>
+
+                <p>
+                    Kabir corridor mein akela khada tha.
+                </p>
+
+                <p>
+                    Lekin uske saamne...
+                </p>
+
+                <div class="quote">
+                    KOI DOOR NAHI THA.
+                </div>
+
+                <p>
+                    Sirf ek blank wall thi.
+                </p>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    THE PHOTOGRAPH
+                </h2>
+
+                <p>
+                    Investigators ko Kabir ke phone mein
+                    ek photograph mili.
+                </p>
+
+                <p>
+                    Photograph mein ek purana bedroom tha.
+                    Ek bed.
+                    Ek chair.
+                    Aur wall par ek old clock.
+                </p>
+
+                <p>
+                    Clock par time tha:
+                </p>
+
+                <div class="quote">
+                    3:17
+                </div>
+
+                <p>
+                    Wall par ek family photograph bhi lagi thi.
+                </p>
+
+                <p>
+                    Photograph mein chaar log the.
+                </p>
+
+                <p>
+                    Aur unmein se ek...
+                </p>
+
+                <div class="quote">
+                    KABIR THA.
+                </div>
+
+                <p>
+                    Problem ye thi ki photograph bahut purani thi.
+                </p>
+
+                <p>
+                    Kabir ne investigators ko sirf itna kaha:
+                </p>
+
+                <div class="quote">
+                    "Ye meri family nahi hai."
+                </div>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    FINAL ENTRY
+                </h2>
+
+                <p>
+                    Police ne Dead Valley building ko dobara search kiya.
+                </p>
+
+                <p>
+                    Corridor mein sirf normal doors the.
+                </p>
+
+                <p>
+                    Woh mysterious door kahin nahi tha.
+                </p>
+
+                <p>
+                    Lekin wall par ek fresh scratch mila.
+                </p>
+
+                <div class="quote">
+                    YOU LEFT ME INSIDE.
+                    <br><br>
+                    13
+                </div>
+
+            </div>
+
+
+            <div class="story-block">
+
+                <h2>
+                    SIX MONTHS LATER
+                </h2>
+
+                <p>
+                    Case close hone ke six months baad police station
+                    mein ek anonymous envelope aaya.
+                </p>
+
+                <p>
+                    Andar sirf ek photograph thi.
+                </p>
+
+                <p>
+                    Wahi bedroom.
+                    Wahi clock.
+                    Wahi family.
+                </p>
+
+                <p>
+                    Lekin is baar photograph mein...
+                </p>
+
+                <div class="quote">
+                    5 PEOPLE
+                </div>
+
+                <p>
+                    Aur sabse peeche Kabir khada tha.
+                </p>
+
+                <div class="quote">
+                    "THE ROOM MOVES."
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section class="final">
+
+        <h2>
+            FILE SEALED
+        </h2>
+
+        <p>
+            CASE #002 — STATUS: UNSOLVED
+        </p>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        SOME TRUTHS ARE BETTER LEFT BURIED.
+
+    </footer>
+
+</body>
+
+</html>
