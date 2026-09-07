@@ -11,7 +11,15 @@
         }
 
         body {
-            background: #080808;
+            background:
+                linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)),
+                url("background.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+
             color: #ddd;
             font-family: Arial, sans-serif;
             line-height: 1.7;
@@ -21,23 +29,23 @@
         .case {
             max-width: 800px;
             margin: auto;
-            border: 1px solid #333;
             padding: 30px;
-            background: #101010;
+            background: rgba(10, 10, 10, 0.92);
+            border: 1px solid #333;
         }
 
         h1 {
             color: #b30000;
             font-size: 32px;
             letter-spacing: 3px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         h2 {
             color: #aaa;
             font-size: 18px;
-            margin-bottom: 30px;
             letter-spacing: 2px;
+            margin-bottom: 30px;
         }
 
         .warning {
@@ -71,7 +79,6 @@
 <div class="case">
 
     <h1>CASE #012</h1>
-
     <h2>THE MAN IN THE WINDOW</h2>
 
     <div class="warning">
@@ -87,13 +94,14 @@
     </p>
 
     <p>
-        Aadmi hamesha saamne wali building ki third floor window mein
-        khada hota tha.
+        Aadmi hamesha saamne wali building ki third floor window
+        mein khada hota tha.
     </p>
 
     <p>
         Woh hilta nahi tha.
-        Bas window ke paas khada hokar seedha uske ghar ki taraf dekhta tha.
+        Bas window ke paas khada hokar seedha uske ghar ki taraf
+        dekhta tha.
     </p>
 
     <p>
@@ -117,8 +125,9 @@
     </p>
 
     <p>
-        Lekin us raat <span class="time">03:17 AM</span> par
-        ladki ne phir us aadmi ko dekha.
+        Lekin us raat
+        <span class="time">03:17 AM</span>
+        par ladki ne phir us aadmi ko dekha.
     </p>
 
     <p>
@@ -187,10 +196,6 @@
 
     <p>
         Third floor ki window mein ek aadmi khada tha.
-    </p>
-
-    <p>
-        Police ne photograph ko zoom kiya.
     </p>
 
     <p class="warning">
