@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASE #006 — THE 3:17 AM RECORDING</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #ddd;
+            font-family: "Share Tech Mono", monospace;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           NOISE
+        ========================= */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.08;
+
+            background-image:
+                repeating-radial-gradient(
+                    circle at 0 0,
+                    transparent 0,
+                    #fff 1px,
+                    transparent 2px
+                );
+
+            background-size: 5px 5px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #250000 0%,
+                    #090000 35%,
+                    #000 75%
+                );
+
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.35),
+                    rgba(0,0,0,.95)
+                );
+        }
+
+        .classified,
+        header h1,
+        .case,
+        .subject {
+            position: relative;
+            z-index: 2;
+        }
+
+        .classified {
+            color: #a00000;
+            letter-spacing: 5px;
+            font-size: 14px;
+
+            animation: blink 2s infinite;
+        }
+
+        header h1 {
+            margin: 25px 0;
+
+            font-family: "Creepster", cursive;
+
+            font-size: clamp(55px, 10vw, 130px);
+
+            color: #ddd;
+
+            letter-spacing: 6px;
+
+            text-shadow:
+                0 0 5px #fff,
+                0 0 15px #500000,
+                0 0 40px #900000;
+
+            animation: flicker 4s infinite;
+        }
+
+        .case {
+            color: #aaa;
+            letter-spacing: 8px;
+        }
+
+        .subject {
+            margin-top: 15px;
+
+            color: #a00000;
+
+            letter-spacing: 5px;
+
+            animation: pulse 2s infinite;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            position: relative;
+
+            width: min(900px, 92%);
+
+            margin: auto;
+
+            z-index: 5;
+        }
+
+
+        /* =========================
+           WARNING
+        ========================= */
+
+        .warning {
+            margin: 80px 0;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border: 1px solid #700000;
+
+            background: rgba(20,0,0,.8);
+
+            box-shadow:
+                0 0 30px rgba(120,0,0,.2);
+        }
+
+        .warning-icon {
+            font-size: 50px;
+            color: #a00000;
+
+            text-shadow:
+                0 0 20px red;
+        }
+
+        .warning p {
+            margin-top: 15px;
+
+            color: #a00000;
+
+            letter-spacing: 4px;
+        }
+
+
+        /* =========================
+           STORY
+        ========================= */
+
+        .story {
+            padding: 20px 0 100px;
+        }
+
+        .story h2 {
+            margin: 70px 0 25px;
+
+            font-family: "Creepster", cursive;
+
+            font-size: 55px;
+
+            color: #eee;
+
+            letter-spacing: 3px;
+
+            text-shadow:
+                0 0 15px #500000;
+        }
+
+        .story p {
+            margin: 20px 0;
+
+            color: #999;
+
+            font-size: 15px;
+
+            line-height: 2;
+
+            letter-spacing: .5px;
+        }
+
+        .red {
+            color: #b00000 !important;
+
+            text-shadow:
+                0 0 8px #400000;
+        }
+
+
+        /* =========================
+           RECORDING BOX
+        ========================= */
+
+        .recording {
+            margin: 45px 0;
+
+            padding: 30px;
+
+            background: #020202;
+
+            border: 1px solid #333;
+
+            box-shadow:
+                inset 0 0 30px rgba(100,0,0,.08);
+
+            position: relative;
+        }
+
+        .recording::before {
+            content: "● REC";
+
+            position: absolute;
+
+            top: 12px;
+            right: 15px;
+
+            color: #a00000;
+
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            animation: blink 1s infinite;
+        }
+
+        .recording-title {
+            color: #777;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 25px;
+        }
+
+        .recording p {
+            color: #888;
+
+            line-height: 2;
+
+            margin: 10px 0;
+        }
+
+        .time {
+            color: #a00000 !important;
+
+            font-size: 18px;
+
+            letter-spacing: 3px;
+        }
+
+
+        /* =========================
+           AUDIO WAVE
+        ========================= */
+
+        .wave {
+            height: 60px;
+
+            margin: 30px 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+        .wave span {
+            width: 3px;
+
+            height: 20px;
+
+            background: #700000;
+
+            animation: wave 1s infinite ease-in-out;
+        }
+
+        .wave span:nth-child(2) {
+            animation-delay: .1s;
+        }
+
+        .wave span:nth-child(3) {
+            animation-delay: .2s;
+        }
+
+        .wave span:nth-child(4) {
+            animation-delay: .3s;
+        }
+
+        .wave span:nth-child(5) {
+            animation-delay: .4s;
+        }
+
+        .wave span:nth-child(6) {
+            animation-delay: .5s;
+        }
+
+        .wave span:nth-child(7) {
+            animation-delay: .6s;
+        }
+
+        .wave span:nth-child(8) {
+            animation-delay: .7s;
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
+            margin: 50px auto;
+
+            max-width: 700px;
+
+            padding: 30px;
+
+            border-left: 2px solid #700000;
+
+            background: rgba(15,0,0,.45);
+
+            color: #888;
+
+            line-height: 2;
+        }
+
+        .message strong {
+            color: #b00000;
+        }
+
+
+        /* =========================
+           GLITCH TEXT
+        ========================= */
+
+        .glitch {
+            margin: 70px 0;
+
+            text-align: center;
+
+            font-size: 35px;
+
+            color: #900000;
+
+            letter-spacing: 5px;
+
+            animation: glitch 1.5s infinite;
+        }
+
+
+        /* =========================
+           FILE DISCOVERY
+        ========================= */
+
+        .discovery {
+            margin: 60px 0;
+
+            padding: 35px;
+
+            border: 1px solid #292929;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #121212,
+                    #050505
+                );
+        }
+
+        .discovery span {
+            color: #a00000;
+        }
+
+        .discovery p {
+            line-height: 2;
+        }
+
+
+        /* =========================
+           FINAL MESSAGE
+        ========================= */
+
+        .final-message {
+            margin: 100px 0;
+
+            padding: 50px 25px;
+
+            text-align: center;
+
+            border-top: 1px solid #400000;
+            border-bottom: 1px solid #400000;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(80,0,0,.25),
+                    transparent 70%
+                );
+        }
+
+        .final-message h2 {
+            margin-bottom: 30px;
+
+            font-family: "Creepster", cursive;
+
+            font-size: 65px;
+
+            color: #a00000;
+
+            animation: flicker 3s infinite;
+        }
+
+        .final-message p {
+            color: #777;
+
+            line-height: 2;
+        }
+
+
+        /* =========================
+           FINAL RECORDING
+        ========================= */
+
+        .last-recording {
+            margin: 80px 0;
+
+            padding: 35px;
+
+            background: #010101;
+
+            border: 1px solid #222;
+
+            box-shadow:
+                0 0 50px rgba(100,0,0,.15);
+        }
+
+        .last-recording .time {
+            margin-bottom: 25px;
+        }
+
+        .last-line {
+            margin-top: 35px;
+
+            color: #b00000;
+
+            font-size: 18px;
+
+            line-height: 2;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           CASE STATUS
+        ========================= */
+
+        .case-status {
+            margin: 100px 0;
+
+            padding: 40px;
+
+            border: 1px solid #292929;
+
+            background: #080808;
+        }
+
+        .case-status h2 {
+            font-family: "Creepster", cursive;
+
+            font-size: 50px;
+
+            margin-bottom: 30px;
+
+            color: #ddd;
+        }
+
+        .case-status p {
+            color: #777;
+
+            line-height: 2;
+        }
+
+        .case-status span {
+            color: #a00000;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 50px;
+
+            text-align: center;
+
+            color: #444;
+
+            border-top: 1px solid #222;
+
+            letter-spacing: 4px;
+
+            line-height: 2;
+
+            background: #020202;
+        }
+
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes blink {
+
+            0%, 45%, 55%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .2;
+            }
+        }
+
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+
+            20%, 62% {
+                opacity: .4;
+            }
+        }
+
+
+        @keyframes pulse {
+
+            50% {
+                opacity: .35;
+            }
+        }
+
+
+        @keyframes glitch {
+
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-4px);
+            }
+
+            40% {
+                transform: translateX(4px);
+            }
+
+            60% {
+                transform: translateX(-2px);
+            }
+        }
+
+
+        @keyframes wave {
+
+            0%, 100% {
+                height: 15px;
+            }
+
+            50% {
+                height: 55px;
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 60px;
+            }
+
+            .case {
+                font-size: 12px;
+            }
+
+            .subject {
+                font-size: 11px;
+            }
+
+            main {
+                width: 90%;
+            }
+
+            .story h2 {
+                font-size: 42px;
+            }
+
+            .story p {
+                font-size: 14px;
+            }
+
+            .recording,
+            .discovery,
+            .case-status {
+                padding: 25px;
+            }
+
+            .final-message h2 {
+                font-size: 48px;
+            }
+
+            .glitch {
+                font-size: 24px;
+            }
+
+            footer {
+                padding: 35px 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="noise"></div>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <p class="classified">
+            [ TOP SECRET / AUDIO ARCHIVE ]
+        </p>
+
+        <h1>
+            THE 3:17 AM<br>RECORDING
+        </h1>
+
+        <p class="case">
+            CASE FILE #006
+        </p>
+
+        <p class="subject">
+            STATUS: UNEXPLAINED
+        </p>
+
+    </header>
+
+
+    <main>
+
+
+        <!-- =========================
+             WARNING
+        ========================= -->
+
+        <section class="warning">
+
+            <div class="warning-icon">
+                ☠
+            </div>
+
+            <p>
+                WARNING — DO NOT PLAY THIS RECORDING AFTER 3:17 AM
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             STORY
+        ========================= -->
+
+        <section class="story">
+
+
+            <h2>
+                THE RECORDING
+            </h2>
+
+            <p>
+                03 September 2026 ko Black Files archive mein
+                ek purani audio file mili.
+            </p>
+
+            <p>
+                File ka naam tha:
+                <b>REC_0317_UNKNOWN.wav</b>
+            </p>
+
+            <p>
+                Problem ye thi ki archive ke records ke according
+                ye file kabhi exist hi nahi karti thi.
+            </p>
+
+            <div class="recording">
+
+                <div class="recording-title">
+                    AUDIO ARCHIVE / FILE #006
+                </div>
+
+                <p class="time">
+                    TIMESTAMP: 03:17:00 AM
+                </p>
+
+                <div class="wave">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <p>
+                    [ AUDIO BEGIN ]
+                </p>
+
+                <p>
+                    03:17 AM.
+                </p>
+
+                <p>
+                    Ek aadmi dheere se bol raha tha...
+                </p>
+
+                <p class="red">
+                    "Agar tum ye recording sun rahe ho...
+                    to lights band mat karna."
+                </p>
+
+                <p>
+                    Phir kuch seconds tak sirf silence tha.
+                </p>
+
+                <p>
+                    Uske baad ek awaaz aayi.
+                </p>
+
+                <p class="red">
+                    "Woh room ke andar nahi hai."
+                </p>
+
+                <p>
+                    "Woh tumhare peeche hai."
+                </p>
+
+            </div>
+
+
+            <h2>
+                SECOND RECORDING
+            </h2>
+
+            <p>
+                Investigators ne socha ki ye koi old prank hoga.
+            </p>
+
+            <p>
+                Lekin jab file dobara play ki gayi...
+                recording badal chuki thi.
+            </p>
+
+            <div class="recording">
+
+                <div class="recording-title">
+                    PLAYBACK #02
+                </div>
+
+                <p class="time">
+                    TIMESTAMP: 03:17:00 AM
+                </p>
+
+                <p>
+                    Is baar aadmi ki awaaz thodi clear thi.
+                </p>
+
+                <p class="red">
+                    "Tumne pehli recording sun li."
+                </p>
+
+                <p>
+                    Silence.
+                </p>
+
+                <p class="red">
+                    "Ab doosri mat sunna."
+                </p>
+
+                <p>
+                    Recording khatam hone ke baad
+                    archive computer ki screen kuch seconds ke liye freeze ho gayi.
+                </p>
+
+            </div>
+
+
+            <div class="message">
+
+                <strong>
+                    ARCHIVE NOTE:
+                </strong>
+
+                <br><br>
+
+                File ko delete karne ki koshish ki gayi.
+                <br>
+
+                Delete karne ke baad file wapas aa gayi.
+                <br>
+
+                Is baar file size pehle se zyada tha.
+
+            </div>
+
+
+            <h2>
+                THE NEW LINE
+            </h2>
+
+            <p>
+                Technician ne recording ko waveform editor mein open kiya.
+            </p>
+
+            <p>
+                Audio ke end mein ek extra voice detect hui.
+            </p>
+
+            <p class="red">
+                Lekin woh voice recording ke original audio ka part nahi thi.
+            </p>
+
+            <div class="recording">
+
+                <div class="recording-title">
+                    UNKNOWN AUDIO LAYER
+                </div>
+
+                <p class="time">
+                    03:17:16 AM
+                </p>
+
+                <p>
+                    [ STATIC ]
+                </p>
+
+                <p>
+                    [ UNKNOWN VOICE ]
+                </p>
+
+                <p class="red">
+                    "Tum abhi bhi screen ko dekh rahe ho."
+                </p>
+
+                <p>
+                    [ 4 SECONDS SILENCE ]
+                </p>
+
+                <p class="red">
+                    "Good."
+                </p>
+
+            </div>
+
+
+            <div class="glitch">
+                IT KNEW SOMEONE WAS LISTENING.
+            </div>
+
+
+            <h2>
+                THE ROOM
+            </h2>
+
+            <p>
+                Investigation ke dauran archive map mein
+                ek strange location mili.
+            </p>
+
+            <p>
+                Room number tha:
+            </p>
+
+            <div class="message">
+
+                <strong style="font-size: 30px;">
+                    317
+                </strong>
+
+                <br><br>
+
+                Building ke official blueprint mein
+                Room 317 naam ka koi room nahi tha.
+
+            </div>
+
+            <p>
+                Investigators ne building check ki.
+            </p>
+
+            <p>
+                Third floor par rooms 301 se 316 tak the.
+            </p>
+
+            <p class="red">
+                318 ke baad seedha staircase tha.
+            </p>
+
+            <p>
+                Lekin 316 aur 318 ke beech...
+                wall ke andar se halki tapping ki awaaz aa rahi thi.
+            </p>
+
+
+            <h2>
+                03:17 AM
+            </h2>
+
+            <p>
+                Raat ko exactly 3:17 AM par archive computer
+                automatically ON ho gaya.
+            </p>
+
+            <p>
+                Kisi ne system start nahi kiya tha.
+            </p>
+
+            <p>
+                Screen par sirf ek message tha:
+            </p>
+
+            <div class="recording">
+
+                <p class="time">
+                    NEW RECORDING DETECTED
+                </p>
+
+                <p class="red">
+                    CREATED: 03:17 AM
+                </p>
+
+                <p>
+                    LOCATION:
+                </p>
+
+                <p class="red">
+                    ROOM 317
+                </p>
+
+            </div>
+
+
+            <p>
+                Sabse strange baat...
+            </p>
+
+            <p class="red">
+                Room 317 ke andar koi microphone installed nahi tha.
+            </p>
+
+
+            <h2>
+                THE LAST FILE
+            </h2>
+
+            <p>
+                Investigators ne final recording play ki.
+            </p>
+
+            <div class="last-recording">
+
+                <p class="time">
+                    REC_0317_FINAL.wav
+                </p>
+
+                <p>
+                    [ STATIC ]
+                </p>
+
+                <p>
+                    [ BREATHING ]
+                </p>
+
+                <br>
+
+                <p>
+                    Unknown voice:
+                </p>
+
+                <p class="red">
+                    "Ab tumhe samajh aa gaya hoga."
+                </p>
+
+                <p>
+                    Silence.
+                </p>
+
+                <p class="red">
+                    "Ye recording past ki nahi hai."
+                </p>
+
+                <p>
+                    Silence.
+                </p>
+
+                <p class="red">
+                    "Ye tumhare liye record ho rahi hai."
+                </p>
+
+                <div class="last-line">
+
+                    03:17:17 AM
+
+                    <br><br>
+
+                    [ RECORDING TERMINATED ]
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FINAL REVEAL
+            ========================= -->
+
+            <section class="final-message">
+
+                <h2>
+                    FINAL DISCOVERY
+                </h2>
+
+                <p>
+                    Recording close karne ke baad
+                    technician ne file properties check ki.
+                </p>
+
+                <p>
+                    Creation date dekh kar woh ruk gaya.
+                </p>
+
+                <p class="red">
+                    04 SEPTEMBER 2026
+                </p>
+
+                <p>
+                    Lekin us waqt date thi:
+                </p>
+
+                <p class="red">
+                    03 SEPTEMBER 2026
+                </p>
+
+                <br>
+
+                <p>
+                    File ek din future mein create hui thi.
+                </p>
+
+                <br>
+
+                <p class="red">
+                    Aur uske neeche ek aur line thi...
+                </p>
+
+                <br>
+
+                <p class="red">
+                    NEXT RECORDING:
+                    03:17 AM — TOMORROW
+                </p>
+
+            </section>
+
+
+            <div class="glitch">
+
+                YOU WERE NOT LISTENING TO IT.
+
+                <br><br>
+
+                IT WAS LISTENING TO YOU.
+
+            </div>
+
+
+            <!-- =========================
+                 CASE STATUS
+            ========================= -->
+
+            <section class="case-status">
+
+                <h2>
+                    CASE STATUS
+                </h2>
+
+                <p>
+                    CASE:
+                    <span>#006 — THE 3:17 AM RECORDING</span>
+                </p>
+
+                <br>
+
+                <p>
+                    FILE:
+                    <span>REC_0317_UNKNOWN.wav</span>
+                </p>
+
+                <br>
+
+                <p>
+                    ORIGINAL CREATOR:
+                    <span>UNKNOWN</span>
+                </p>
+
+                <br>
+
+                <p>
+                    LOCATION:
+                    <span>ROOM 317</span>
+                </p>
+
+                <br>
+
+                <p>
+                    LAST TIMESTAMP:
+                    <span>03:17:17 AM</span>
+                </p>
+
+                <br>
+
+                <p>
+                    STATUS:
+                    <span>UNEXPLAINED</span>
+                </p>
+
+                <br>
+
+                <p>
+                    NEXT RECORDING:
+                    <span>03:17 AM — TOMORROW</span>
+                </p>
+
+            </section>
+
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        CASE #006 — STATUS: UNEXPLAINED
+
+        <br><br>
+
+        [ ARCHIVE ACCESS RESTRICTED ]
+
+    </footer>
+
+
+</body>
+
+</html>
