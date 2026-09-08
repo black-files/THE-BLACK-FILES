@@ -1,0 +1,655 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>THE MAN IN THE WINDOW — BLACK FILES</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.55),
+                    rgba(0,0,0,.88)
+                ),
+                url("window.png");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: #c7c7c7;
+            font-family: "Share Tech Mono", monospace;
+
+            overflow-x: hidden;
+        }
+
+        /* FOG */
+
+        .fog {
+            position: fixed;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    transparent 15%,
+                    rgba(0,0,0,.9) 90%
+                );
+
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* NOISE */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+
+            opacity: .06;
+
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    #fff 3px
+                );
+
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* HEADER */
+
+        header {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            position: relative;
+            z-index: 4;
+        }
+
+        .classified {
+            color: #777;
+            letter-spacing: 5px;
+            font-size: 13px;
+        }
+
+        h1 {
+            margin: 25px 0 10px;
+
+            font-family: "Creepster", cursive;
+
+            font-size: clamp(55px, 10vw, 120px);
+
+            color: #900000;
+
+            text-shadow:
+                0 0 10px #400000,
+                0 0 35px #150000;
+
+            animation: flicker 4s infinite;
+        }
+
+        .case {
+            color: #aaa;
+            letter-spacing: 8px;
+        }
+
+        .window {
+            margin-top: 18px;
+
+            color: #b00000;
+
+            letter-spacing: 5px;
+
+            animation: pulse 2s infinite;
+        }
+
+        /* MAIN */
+
+        main {
+            position: relative;
+            z-index: 4;
+
+            width: min(900px, 92%);
+
+            margin: auto;
+        }
+
+        /* WARNING */
+
+        .warning {
+            border: 1px solid #600000;
+
+            padding: 25px;
+
+            margin-bottom: 70px;
+
+            text-align: center;
+
+            background: rgba(15,0,0,.78);
+
+            box-shadow:
+                0 0 30px rgba(120,0,0,.15);
+        }
+
+        .warning span {
+            font-size: 35px;
+            color: #a00000;
+        }
+
+        .warning p {
+            margin-top: 12px;
+
+            color: #a00000;
+
+            letter-spacing: 3px;
+        }
+
+        /* STORY */
+
+        .story {
+
+            background: rgba(0,0,0,.78);
+
+            padding: 50px;
+
+            border-left: 2px solid #470000;
+            border-right: 2px solid #220000;
+
+            box-shadow:
+                0 0 80px rgba(0,0,0,.9);
+
+            font-size: 17px;
+            line-height: 2;
+        }
+
+        .story p {
+            margin: 25px 0;
+        }
+
+        .story b {
+            color: #eee;
+        }
+
+        h2 {
+            margin: 30px 0 55px;
+
+            text-align: center;
+
+            color: #9d0000;
+
+            font-family: "Creepster", cursive;
+
+            font-size: 50px;
+
+            text-shadow:
+                0 0 15px #3b0000;
+        }
+
+        .time {
+            color: #777;
+
+            border-bottom: 1px solid #222;
+
+            padding-bottom: 8px;
+
+            letter-spacing: 3px;
+        }
+
+        .red {
+            color: #9d0000;
+        }
+
+        /* WINDOW IMAGE */
+
+        .window-image {
+
+            margin: 45px auto;
+
+            width: 90%;
+            max-width: 650px;
+
+            border: 2px solid #300000;
+
+            box-shadow:
+                0 0 40px #000;
+
+            overflow: hidden;
+        }
+
+        .window-image img {
+            width: 100%;
+            display: block;
+
+            filter:
+                brightness(.55)
+                contrast(1.3);
+        }
+
+        /* CHAT */
+
+        .chat {
+            margin: 40px 0;
+        }
+
+        .message {
+
+            width: fit-content;
+            max-width: 75%;
+
+            padding: 12px 18px;
+
+            margin: 14px 0;
+
+            border-radius: 5px;
+
+            line-height: 1.6;
+
+            background: #151515;
+
+            box-shadow:
+                0 5px 20px #000;
+        }
+
+        .message small {
+            display: block;
+
+            color: #777;
+
+            margin-bottom: 4px;
+        }
+
+        .left {
+            border-left: 3px solid #333;
+        }
+
+        .right {
+            margin-left: auto;
+
+            border-right: 3px solid #520000;
+
+            background: #190909;
+        }
+
+        /* FINAL */
+
+        .final-message {
+
+            margin-top: 70px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            border-top: 1px solid #300000;
+            border-bottom: 1px solid #300000;
+
+            color: #8d0000;
+
+            font-family: "Creepster", cursive;
+
+            font-size: 32px;
+
+            text-shadow:
+                0 0 15px #350000;
+        }
+
+        /* FOOTER */
+
+        footer {
+
+            position: relative;
+            z-index: 5;
+
+            margin-top: 80px;
+
+            padding: 50px;
+
+            text-align: center;
+
+            color: #444;
+
+            border-top: 1px solid #222;
+
+            letter-spacing: 4px;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+
+            20%, 62% {
+                opacity: .35;
+            }
+        }
+
+        @keyframes pulse {
+
+            50% {
+                opacity: .35;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .story {
+                padding: 25px;
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 60px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .classified {
+                font-size: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="fog"></div>
+    <div class="noise"></div>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <p class="classified">
+            [ TOP SECRET / RESTRICTED ]
+        </p>
+
+        <h1>
+            THE MAN IN THE WINDOW
+        </h1>
+
+        <p class="case">
+            CASE FILE #009
+        </p>
+
+        <p class="window">
+            SUBJECT: UNKNOWN
+        </p>
+
+    </header>
+
+
+    <!-- STORY -->
+
+    <main>
+
+        <section class="warning">
+
+            <span>⚠</span>
+
+            <p>
+                DO NOT LOOK AT THE WINDOW AFTER MIDNIGHT.
+            </p>
+
+        </section>
+
+
+        <section class="story">
+
+            <h2>
+                THE WINDOW
+            </h2>
+
+
+            <p class="time">
+                12:03 AM
+            </p>
+
+
+            <p>
+                Raat ke almost 12 baje the.
+                Main apne room mein akela tha.
+            </p>
+
+
+            <p>
+                Mere room ke saamne ek purani building thi.
+                Wo building saalon se abandoned thi.
+            </p>
+
+
+            <p>
+                Lekin us raat...
+                uski ek window mein light jal rahi thi.
+            </p>
+
+
+            <div class="window-image">
+
+                
+
+            </div>
+
+
+            <p>
+                Pehle mujhe laga kisi ne light chhod di hogi.
+            </p>
+
+
+            <p>
+                Phir maine window ke paas
+                <b>ek aadmi ko khade dekha.</b>
+            </p>
+
+
+            <p class="red">
+                Wo bilkul seedha meri taraf dekh raha tha.
+            </p>
+
+
+            <p class="time">
+                12:17 AM
+            </p>
+
+
+            <p>
+                Maine curtains band kar diye.
+            </p>
+
+
+            <p>
+                Kuch seconds baad curiosity mein
+                maine phir se curtains thode se khole.
+            </p>
+
+
+            <p>
+                Window ab bhi wahan thi...
+            </p>
+
+
+            <p class="red">
+                LEKIN AADMI GAYAB THA.
+            </p>
+
+
+            <div class="chat">
+
+                <div class="message left">
+
+                    <small>FRIEND</small>
+
+                    bhai tu abhi bhi jag raha hai?
+
+                </div>
+
+
+                <div class="message right">
+
+                    <small>ME</small>
+
+                    haan... kuch ajeeb dekha maine
+
+                </div>
+
+
+                <div class="message left">
+
+                    <small>FRIEND</small>
+
+                    kya?
+
+                </div>
+
+
+                <div class="message right">
+
+                    <small>ME</small>
+
+                    saamne wali building ki window mein
+                    koi khada tha
+
+                </div>
+
+
+                <div class="message left">
+
+                    <small>FRIEND</small>
+
+                    saamne wali building?
+
+                </div>
+
+
+                <div class="message right">
+
+                    <small>ME</small>
+
+                    haan
+
+                </div>
+
+
+            </div>
+
+
+            <p class="time">
+                12:21 AM
+            </p>
+
+
+            <p>
+                Mere phone par ek notification aaya.
+            </p>
+
+
+            <p>
+                <b>UNKNOWN NUMBER</b>
+            </p>
+
+
+            <p class="red">
+                "CURTAINS BAND KAR DO."
+            </p>
+
+
+            <p>
+                Main kuch seconds tak screen ko dekhta raha.
+            </p>
+
+
+            <p>
+                Phir dheere se maine window ki taraf dekha.
+            </p>
+
+
+            <p>
+                Saamne wali window...
+                ab completely dark thi.
+            </p>
+
+
+            <p>
+                Lekin mere room ke glass mein
+                ek reflection dikh raha tha.
+            </p>
+
+
+            <p class="red">
+                WO AADMI MERE PEECHE KHADA THA.
+            </p>
+
+
+            <div class="final-message">
+
+                HE WAS NEVER IN THAT WINDOW.
+
+                <br><br>
+
+                HE WAS WATCHING FROM MINE.
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        CASE #009 — STATUS: UNRESOLVED
+
+    </footer>
+
+
+</body>
+
+</html>
+```
