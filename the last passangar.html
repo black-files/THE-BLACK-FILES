@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CASE #009 — The Last Passenger</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        linear-gradient(rgba(0,0,0,.50), rgba(0,0,0,.80)),
+        url("train.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: #c7c7c7;
+    font-family: "Share Tech Mono", monospace;
+
+    overflow-x: hidden;
+}
+
+/* FOG */
+
+.fog {
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 20%,
+            rgba(0,0,0,.85) 85%
+        );
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* NOISE */
+
+.noise {
+    position: fixed;
+    inset: 0;
+
+    opacity: .07;
+    pointer-events: none;
+
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            #fff 3px
+        );
+
+    z-index: 3;
+}
+
+/* HEADER */
+
+header {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(90,0,0,.25),
+            transparent 60%
+        );
+}
+
+.classified {
+    color: #777;
+    letter-spacing: 5px;
+    font-size: 13px;
+}
+
+h1 {
+    margin: 25px 0 10px;
+
+    font-family: "Creepster", cursive;
+    font-size: clamp(55px, 10vw, 120px);
+
+    color: #8f0000;
+
+    text-shadow:
+        0 0 10px #400000,
+        0 0 30px #180000;
+
+    animation: flicker 4s infinite;
+}
+
+.case {
+    color: #aaa;
+    letter-spacing: 8px;
+}
+
+.room {
+    margin-top: 15px;
+
+    color: #b00000;
+    letter-spacing: 6px;
+
+    animation: pulse 2s infinite;
+}
+
+/* MAIN */
+
+main {
+    position: relative;
+    z-index: 4;
+
+    width: min(900px, 92%);
+    margin: auto;
+}
+
+/* WARNING */
+
+.warning {
+    border: 1px solid #600000;
+
+    padding: 25px;
+    margin-bottom: 80px;
+
+    text-align: center;
+
+    background: rgba(20,0,0,.75);
+
+    box-shadow:
+        0 0 30px rgba(120,0,0,.15);
+}
+
+.warning span {
+    font-size: 40px;
+    color: #a00000;
+}
+
+.warning p {
+    margin-top: 10px;
+
+    color: #a00000;
+    letter-spacing: 3px;
+}
+
+/* STORY */
+
+.story {
+    font-size: 17px;
+    line-height: 2;
+
+    background: rgba(0,0,0,.72);
+
+    padding: 50px;
+
+    border-left: 2px solid #470000;
+    border-right: 2px solid #220000;
+
+    box-shadow:
+        0 0 80px rgba(0,0,0,.9);
+}
+
+.story p {
+    margin: 25px 0;
+}
+
+.story b {
+    color: #ddd;
+}
+
+h2 {
+    margin: 60px 0;
+
+    text-align: center;
+
+    color: #9d0000;
+
+    font-family: "Creepster", cursive;
+    font-size: 45px;
+
+    text-shadow: 0 0 15px #3b0000;
+}
+
+/* TIME */
+
+.time {
+    color: #777;
+
+    border-bottom: 1px solid #222;
+
+    padding-bottom: 8px;
+
+    letter-spacing: 3px;
+}
+
+/* SOUND */
+
+.sound {
+    margin: 35px 0;
+
+    text-align: center;
+
+    color: #aaa;
+
+    font-size: 28px;
+
+    letter-spacing: 8px;
+
+    animation: shake 3s infinite;
+}
+
+/* CHAT */
+
+.chat {
+    margin: 40px 0;
+}
+
+.message {
+    width: fit-content;
+    max-width: 75%;
+
+    padding: 12px 18px;
+    margin: 14px 0;
+
+    border-radius: 5px;
+
+    line-height: 1.6;
+
+    background: #151515;
+
+    box-shadow: 0 5px 20px #000;
+}
+
+.message small {
+    display: block;
+
+    color: #777;
+
+    margin-bottom: 4px;
+}
+
+.left {
+    border-left: 3px solid #333;
+}
+
+.right {
+    margin-left: auto;
+
+    border-right: 3px solid #520000;
+
+    background: #190909;
+}
+
+/* PHONE */
+
+.phone {
+    margin: 45px 0;
+
+    padding: 25px;
+
+    background: #080808;
+
+    border: 1px solid #333;
+
+    box-shadow:
+        inset 0 0 30px #000,
+        0 0 30px rgba(0,0,0,.8);
+}
+
+.phone span {
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.phone p {
+    color: #bbb;
+    margin: 15px 0;
+}
+
+.danger {
+    border-color: #550000;
+
+    animation: phoneGlow 3s infinite;
+}
+
+/* DOOR */
+
+.door {
+    margin: 50px auto;
+
+    width: 250px;
+    height: 330px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 5px solid #171717;
+
+    background:
+        linear-gradient(
+            90deg,
+            #080808,
+            #222,
+            #090909
+        );
+
+    color: #720000;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 0 40px #000,
+        inset 0 0 50px #000;
+}
+
+/* MIRROR */
+
+.mirror-text {
+    margin: 60px auto;
+
+    padding: 35px;
+
+    width: 80%;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 24px;
+
+    border: 1px solid #292929;
+
+    background: rgba(255,255,255,.015);
+
+    text-shadow: 0 0 8px #777;
+
+    transform: rotate(-1deg);
+}
+
+.big {
+    font-size: 40px;
+    color: #900000;
+
+    animation: flicker 2s infinite;
+}
+
+/* WHISPER */
+
+.whisper {
+    margin: 45px 0;
+
+    text-align: center;
+
+    color: #9c0000;
+
+    font-size: 22px;
+
+    font-style: italic;
+
+    text-shadow: 0 0 12px #4a0000;
+
+    animation: whisper 2s infinite;
+}
+
+/* GLITCH */
+
+.glitch {
+    margin: 60px 0;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #b00000;
+
+    border: 1px solid #3a0000;
+
+    letter-spacing: 5px;
+
+    animation: glitch 1.5s infinite;
+}
+
+/* FINAL */
+
+.final {
+    margin-top: 100px;
+
+    padding: 50px;
+
+    border: 1px solid #450000;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(80,0,0,.15),
+            transparent
+        );
+}
+
+.red {
+    color: #a00000;
+
+    letter-spacing: 3px;
+}
+
+/* CASE STATUS */
+
+.case-status {
+    margin: 120px 0;
+
+    padding: 40px;
+
+    background: #070707;
+
+    border: 1px solid #333;
+
+    box-shadow: 0 0 60px #000;
+}
+
+.case-status h2 {
+    margin-top: 10px;
+}
+
+.case-status span {
+    color: #a00000;
+
+    animation: pulse 1s infinite;
+}
+
+.case-status hr {
+    border: 0;
+    border-top: 1px solid #333;
+
+    margin: 30px 0;
+}
+
+.final-message {
+    text-align: center;
+
+    color: #888;
+
+    font-size: 20px;
+}
+
+/* FOOTER */
+
+footer {
+    position: relative;
+    z-index: 5;
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: #444;
+
+    border-top: 1px solid #222;
+
+    letter-spacing: 4px;
+}
+
+/* ANIMATIONS */
+
+@keyframes flicker {
+    0%,18%,22%,63%,64%,65%,100% {
+        opacity: 1;
+    }
+
+    20%,62% {
+        opacity: .35;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .35;
+    }
+}
+
+@keyframes shake {
+    0%,90%,100% {
+        transform: translateX(0);
+    }
+
+    92% {
+        transform: translateX(-4px);
+    }
+
+    94% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes phoneGlow {
+    50% {
+        box-shadow: 0 0 30px rgba(100,0,0,.25);
+    }
+}
+
+@keyframes whisper {
+    0%,100% {
+        opacity: .45;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(3px);
+    }
+}
+
+@keyframes glitch {
+    0%,100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-3px);
+    }
+
+    40% {
+        transform: translateX(3px);
+    }
+}
+
+/* MOBILE */
+
+@media (max-width:600px) {
+
+    .story {
+        padding: 25px;
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 65px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .mirror-text {
+        width: 100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="fog"></div>
+<div class="noise"></div>
+
+<header>
+
+    <div class="classified">
+        [ TOP SECRET / RESTRICTED ]
+    </div>
+
+    <h1>THE LAST PASSENGER</h1>
+
+    <div class="case">
+        CASE FILE #009
+    </div>
+
+    <div class="room">
+        TRAIN NO. 17
+    </div>
+
+</header>
+
+<main>
+
+<section class="warning">
+
+    <span>⚠</span>
+
+    <p>
+        DO NOT BOARD THE LAST TRAIN.
+    </p>
+
+</section>
+
+
+<section class="story">
+
+    <div class="time">
+        11:48 PM — BLACKWOOD STATION
+    </div>
+
+    <p>
+        Station almost completely empty tha.
+    </p>
+
+    <p>
+        Arjun platform number <b>17</b> par akela khada tha.
+        Woh last train ka wait kar raha tha.
+    </p>
+
+    <p>
+        Station ki lights baar-baar flicker kar rahi thi.
+        Har kuch seconds baad platform darkness mein chala jata.
+    </p>
+
+    <h2>12:03 AM</h2>
+
+    <p>
+        Door se train ki awaaz aayi.
+    </p>
+
+    <p>
+        Train platform par aakar ruk gayi.
+    </p>
+
+    <p>
+        Arjun ne dekha...
+        poori train khaali thi.
+    </p>
+
+    <p>
+        Na koi passenger.
+        Na koi guard.
+        Na koi driver dikh raha tha.
+    </p>
+
+    <p>
+        Sirf last compartment ki ek light jal rahi thi.
+    </p>
+
+    <div class="sound">
+        T̷R̷A̷I̷N̷ ̷1̷7̷
+    </div>
+
+    <p>
+        Arjun train ke andar chala gaya.
+    </p>
+
+    <p>
+        Jaise hi woh andar gaya...
+        door automatically band ho gaya.
+    </p>
+
+    <p>
+        Train chal padi.
+    </p>
+
+    <h2>THE PASSENGER</h2>
+
+    <p>
+        Kuch minutes baad Arjun ko laga ki compartment mein
+        <b>koi aur bhi hai.</b>
+    </p>
+
+    <p>
+        Usne dheere se peeche dekha.
+    </p>
+
+    <p>
+        Ek aadmi black coat pehne corner mein baitha tha.
+    </p>
+
+    <p>
+        Uska face darkness mein chhupa hua tha.
+    </p>
+
+    <div class="chat">
+
+        <div class="message left">
+            <small>ARJUN</small>
+            Bhai... ye train kahan ja rahi hai?
+        </div>
+
+        <div class="message right">
+            <small>UNKNOWN</small>
+            ...
+        </div>
+
+    </div>
+
+    <p>
+        Koi answer nahi mila.
+    </p>
+
+    <p>
+        Train ki speed badhti gayi.
+    </p>
+
+    <h2>12:17 AM</h2>
+
+    <p>
+        Suddenly...
+    </p>
+
+    <div class="glitch">
+        TRAIN STOPPED.
+    </div>
+
+    <p>
+        Lights completely band ho gayi.
+    </p>
+
+    <p>
+        Arjun ne phone ki flashlight on ki.
+    </p>
+
+    <p>
+        Usne saamne wali seat dekhi.
+    </p>
+
+    <p>
+        <b>Woh aadmi gayab tha.</b>
+    </p>
+
+    <div class="phone danger">
+
+        <span>UNKNOWN FILE FOUND</span>
+
+        <p>
+            12:17 AM
+        </p>
+
+        <p class="red">
+            YOU ARE NOT THE LAST PASSENGER.
+        </p>
+
+    </div>
+
+    <p>
+        Seat par ek chhota sa paper pada tha.
+    </p>
+
+    <div class="mirror-text">
+
+        YOU ARE NOT<br>
+
+        <span class="big">
+            THE LAST PASSENGER.
+        </span>
+
+    </div>
+
+    <p>
+        Arjun ne turant train ka door kholne ki koshish ki.
+        Lekin door nahi khula.
+    </p>
+
+    <div class="whisper">
+        "NEXT STATION..."
+    </div>
+
+    <div class="whisper">
+        "...IS YOU."
+    </div>
+
+    <p>
+        Uske baad Arjun ka phone band ho gaya.
+    </p>
+
+    <p>
+        Aur train phir se chal padi.
+    </p>
+
+
+    <h2>NEXT MORNING</h2>
+
+    <p>
+        Station staff ko ek train mili.
+    </p>
+
+    <p>
+        Train completely empty thi.
+    </p>
+
+    <p>
+        Last compartment mein Arjun ka phone pada tha.
+    </p>
+
+    <p>
+        Phone ki screen par ek photo open thi.
+    </p>
+
+    <div class="photo-warning">
+
+        PHOTO #17
+
+        <br><br>
+
+        ARJUN WAS STANDING
+        INSIDE THE COMPARTMENT.
+
+        <br><br>
+
+        SOMEONE WAS
+        STANDING BEHIND HIM.
+
+    </div>
+
+    <p>
+        Staff ne CCTV check ki.
+    </p>
+
+    <p>
+        Footage mein Arjun train mein enter karta hua dikha.
+    </p>
+
+    <p>
+        Lekin train se bahar nikalte hue...
+    </p>
+
+    <div class="glitch">
+        NO ONE.
+    </div>
+
+    <p>
+        Arjun ka ticket bhi mila.
+    </p>
+
+    <div class="door">
+        DESTINATION<br>
+        UNKNOWN
+    </div>
+
+
+    <section class="final">
+
+        <p class="red">
+            THE TRAIN WAS EMPTY.
+        </p>
+
+        <br>
+
+        <p class="red">
+            BUT SOMEONE WAS STILL WAITING.
+        </p>
+
+    </section>
+
+</section>
+
+
+<section class="case-status">
+
+    <h2>CASE STATUS</h2>
+
+    <hr>
+
+    <p>
+        SUBJECT:
+        <span>ARJUN</span>
+    </p>
+
+    <p>
+        TRAIN:
+        <span>#17</span>
+    </p>
+
+    <p>
+        LAST TIME SEEN:
+        <span>12:17 AM</span>
+    </p>
+
+    <p>
+        LOCATION:
+        <span>UNKNOWN</span>
+    </p>
+
+    <p>
+        STATUS:
+        <span>MISSING</span>
+    </p>
+
+    <hr>
+
+    <p class="final-message">
+        THE LAST PASSENGER WAS NEVER FOUND.
+    </p>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    THE BLACK FILES © 2026
+    <br><br>
+    CASE #009 — STATUS: UNRESOLVED
+
+</footer>
+
+</body>
+</html>
