@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASE #009 — The Voice From Room 9</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.55),
+                    rgba(0,0,0,0.88)
+                ),
+                url("room9.png");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: #ddd;
+            font-family: "Share Tech Mono", monospace;
+
+            overflow-x: hidden;
+        }
+
+        /* DARK FOG */
+
+        .fog {
+            position: fixed;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(255,255,255,0.04),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(255,0,0,0.035),
+                    transparent 35%
+                );
+
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* NOISE */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                radial-gradient(
+                    rgba(255,255,255,0.15) 1px,
+                    transparent 1px
+                );
+
+            background-size: 4px 4px;
+            opacity: 0.07;
+
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* HEADER */
+
+        header {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            position: relative;
+            z-index: 3;
+
+            padding: 30px;
+        }
+
+        .header-content {
+            max-width: 900px;
+        }
+
+        .classified {
+            color: #777;
+            font-size: 13px;
+            letter-spacing: 5px;
+
+            margin-bottom: 25px;
+
+            animation: flicker 4s infinite;
+        }
+
+        h1 {
+            font-family: "Creepster", cursive;
+
+            font-size: clamp(55px, 10vw, 120px);
+
+            color: #ddd;
+
+            letter-spacing: 5px;
+
+            text-shadow:
+                0 0 10px #900,
+                0 0 30px #400;
+
+            animation: titleGlitch 5s infinite;
+        }
+
+        .case-number {
+            margin-top: 15px;
+
+            color: #b30000;
+
+            letter-spacing: 7px;
+
+            font-size: 18px;
+
+            text-shadow: 0 0 10px red;
+        }
+
+        .subtitle {
+            margin-top: 25px;
+
+            color: #888;
+
+            font-size: 15px;
+
+            letter-spacing: 3px;
+        }
+
+        /* CONTENT */
+
+        main {
+            width: 90%;
+            max-width: 900px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 3;
+
+            padding-bottom: 100px;
+        }
+
+        .warning {
+            border: 1px solid #700;
+
+            padding: 25px;
+
+            margin-bottom: 50px;
+
+            background: rgba(0,0,0,0.65);
+
+            box-shadow:
+                0 0 20px rgba(150,0,0,0.15),
+                inset 0 0 20px rgba(100,0,0,0.1);
+
+            animation: pulse 4s infinite;
+        }
+
+        .warning-title {
+            color: #d00000;
+
+            font-size: 20px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 12px;
+        }
+
+        .warning p {
+            color: #999;
+            line-height: 1.8;
+        }
+
+        /* STORY */
+
+        .story {
+            background: rgba(0,0,0,0.68);
+
+            border-left: 2px solid #800;
+
+            padding: 35px;
+
+            margin-bottom: 40px;
+
+            box-shadow:
+                0 0 25px rgba(0,0,0,0.8);
+        }
+
+        .story h2 {
+            font-family: "Creepster", cursive;
+
+            color: #b00000;
+
+            font-size: 35px;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 25px;
+
+            text-shadow: 0 0 12px #500;
+        }
+
+        .story p {
+            color: #bbb;
+
+            line-height: 2;
+
+            font-size: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .time {
+            color: #d00000;
+
+            text-shadow: 0 0 8px red;
+
+            letter-spacing: 2px;
+        }
+
+        /* WHISPER */
+
+        .whisper {
+            text-align: center;
+
+            margin: 60px 0;
+
+            padding: 35px 20px;
+
+            border-top: 1px solid #400;
+            border-bottom: 1px solid #400;
+
+            color: #777;
+
+            font-size: 18px;
+
+            letter-spacing: 4px;
+
+            animation: whisper 3s infinite;
+        }
+
+        .whisper span {
+            display: block;
+
+            color: #a00000;
+
+            font-family: "Creepster", cursive;
+
+            font-size: 32px;
+
+            margin-top: 15px;
+
+            text-shadow: 0 0 15px red;
+        }
+
+        /* RECORDING */
+
+        .recording {
+            margin: 45px 0;
+
+            padding: 25px;
+
+            background: rgba(10,10,10,0.85);
+
+            border: 1px solid #333;
+
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
+        }
+
+        .recording-title {
+            color: #777;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 20px;
+        }
+
+        .audio-line {
+            height: 2px;
+
+            width: 100%;
+
+            background: #600;
+
+            position: relative;
+
+            box-shadow: 0 0 10px #500;
+        }
+
+        .audio-line::before,
+        .audio-line::after {
+            content: "";
+
+            position: absolute;
+
+            top: -7px;
+
+            width: 2px;
+
+            height: 16px;
+
+            background: #900;
+        }
+
+        .audio-line::before {
+            left: 20%;
+        }
+
+        .audio-line::after {
+            right: 25%;
+        }
+
+        /* FINAL */
+
+        .final {
+            text-align: center;
+
+            padding: 70px 20px;
+
+            margin-top: 50px;
+        }
+
+        .final h2 {
+            font-family: "Creepster", cursive;
+
+            color: #b00000;
+
+            font-size: 45px;
+
+            text-shadow: 0 0 20px #700;
+
+            margin-bottom: 25px;
+        }
+
+        .final p {
+            color: #aaa;
+
+            line-height: 2;
+
+            max-width: 700px;
+
+            margin: auto;
+        }
+
+        .final .last-line {
+            margin-top: 40px;
+
+            color: #d00000;
+
+            font-size: 20px;
+
+            letter-spacing: 3px;
+
+            animation: flicker 2s infinite;
+        }
+
+        /* STATUS */
+
+        .case-status {
+            margin-top: 60px;
+
+            padding: 25px;
+
+            border: 1px solid #500;
+
+            background: rgba(0,0,0,0.7);
+
+            text-align: center;
+        }
+
+        .case-status p {
+            margin: 8px;
+
+            color: #777;
+        }
+
+        .case-status .red {
+            color: #b00000;
+
+            text-shadow: 0 0 8px red;
+        }
+
+        /* FOOTER */
+
+        footer {
+            position: relative;
+            z-index: 3;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            border-top: 1px solid #222;
+
+            color: #555;
+
+            letter-spacing: 3px;
+
+            font-size: 12px;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+
+            20%, 21%, 62% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%, 100% {
+                box-shadow:
+                    0 0 20px rgba(150,0,0,0.15);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 35px rgba(150,0,0,0.35);
+            }
+        }
+
+        @keyframes whisper {
+
+            0%, 100% {
+                opacity: 0.55;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes titleGlitch {
+
+            0%, 90%, 100% {
+                transform: translateX(0);
+            }
+
+            92% {
+                transform: translateX(-3px);
+            }
+
+            94% {
+                transform: translateX(3px);
+            }
+
+            96% {
+                transform: translateX(-2px);
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            header {
+                min-height: 85vh;
+            }
+
+            .classified {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+
+            h1 {
+                font-size: 58px;
+            }
+
+            .case-number {
+                font-size: 13px;
+                letter-spacing: 4px;
+            }
+
+            .story {
+                padding: 22px;
+            }
+
+            .story p {
+                font-size: 14px;
+                line-height: 1.8;
+            }
+
+            .warning {
+                padding: 20px;
+            }
+
+            .final h2 {
+                font-size: 35px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="fog"></div>
+    <div class="noise"></div>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="header-content">
+
+            <div class="classified">
+                [ CLASSIFIED ACCESS ONLY ]
+            </div>
+
+            <h1>
+                THE VOICE
+            </h1>
+
+            <div class="case-number">
+                CASE #009 — ROOM 9
+            </div>
+
+            <div class="subtitle">
+                SOME ROOMS SHOULD NEVER BE OPENED.
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN STORY -->
+
+    <main>
+
+        <!-- WARNING -->
+
+        <section class="warning">
+
+            <div class="warning-title">
+                ⚠ WARNING
+            </div>
+
+            <p>
+                This file contains an unresolved incident.
+                Audio evidence recovered from the location has been
+                partially corrupted.
+            </p>
+
+            <p>
+                The original investigators advised that
+                <span class="time">ROOM 9</span>
+                should never be entered after midnight.
+            </p>
+
+        </section>
+
+
+        <!-- STORY -->
+
+        <section class="story">
+
+            <h2>
+                THE VOICE FROM ROOM 9
+            </h2>
+
+            <p>
+                The building had only eight rooms.
+            </p>
+
+            <p>
+                At least, that was what the official records said.
+            </p>
+
+            <p>
+                The old building had been abandoned for almost
+                twelve years. Windows were broken, walls were covered
+                in dust, and the electricity had been disconnected
+                long ago.
+            </p>
+
+            <p>
+                But every night, exactly at
+                <span class="time">3:09 AM</span>,
+                someone heard a voice coming from the third floor.
+            </p>
+
+            <p>
+                The voice always said the same thing.
+            </p>
+
+        </section>
+
+
+        <!-- WHISPER -->
+
+        <div class="whisper">
+
+            A recording recovered from outside the building contained
+            only one sentence.
+
+            <span>
+                "Don't open Room 9."
+            </span>
+
+        </div>
+
+
+        <!-- STORY PART 2 -->
+
+        <section class="story">
+
+            <p>
+                Nobody knew where the voice came from.
+            </p>
+
+            <p>
+                There was no Room 9 on the building's original floor
+                plan.
+            </p>
+
+            <p>
+                Investigators searched the third floor several times.
+                They found eight doors.
+            </p>
+
+            <p>
+                Nothing more.
+            </p>
+
+            <p>
+                Then one investigator noticed something strange.
+            </p>
+
+            <p>
+                Between Room 8 and the end of the hallway,
+                there was a small section of wall that looked newer
+                than the rest.
+            </p>
+
+            <p>
+                Behind it was a door.
+            </p>
+
+            <p>
+                No number.
+            </p>
+
+            <p>
+                No handle.
+            </p>
+
+            <p>
+                Just a tiny metal plate.
+            </p>
+
+            <p>
+                <span class="time">
+                    9
+                </span>
+            </p>
+
+        </section>
+
+
+        <!-- RECORDING -->
+
+        <section class="recording">
+
+            <div class="recording-title">
+                [ AUDIO LOG — 03:09 AM ]
+            </div>
+
+            <div class="audio-line"></div>
+
+            <p style="margin-top:25px; color:#666; line-height:1.8;">
+
+                Static...<br>
+                footsteps...<br>
+                breathing...<br><br>
+
+                Then a voice.
+            </p>
+
+            <p style="margin-top:20px; color:#999;">
+
+                The investigator's name was heard
+                from behind the door.
+
+            </p>
+
+        </section>
+
+
+        <!-- STORY PART 3 -->
+
+        <section class="story">
+
+            <p>
+                He never told anyone what he heard.
+            </p>
+
+            <p>
+                He simply wrote one sentence in his notebook:
+            </p>
+
+        </section>
+
+
+        <div class="whisper">
+
+            THE VOICE KNEW MY NAME.
+
+            <span>
+                AND IT SOUNDED LIKE ME.
+            </span>
+
+        </div>
+
+
+        <!-- FINAL -->
+
+        <section class="final">
+
+            <h2>
+                FINAL ENTRY
+            </h2>
+
+            <p>
+                The investigation was officially closed three days
+                later.
+            </p>
+
+            <p style="margin-top:20px;">
+                The building was sealed.
+                The third floor was destroyed.
+                Every record mentioning Room 9 was removed.
+            </p>
+
+            <p style="margin-top:20px;">
+                But six months later, a new recording appeared
+                inside the police evidence archive.
+            </p>
+
+            <p style="margin-top:20px;">
+                Nobody knew who recorded it.
+            </p>
+
+            <p style="margin-top:20px;">
+                The timestamp was
+                <span class="time">03:09 AM.</span>
+            </p>
+
+            <div class="last-line">
+                "THERE ARE NINE ROOMS."
+            </div>
+
+        </section>
+
+
+        <!-- CASE STATUS -->
+
+        <section class="case-status">
+
+            <p>
+                CASE NUMBER:
+                <span class="red">009</span>
+            </p>
+
+            <p>
+                LOCATION:
+                UNKNOWN
+            </p>
+
+            <p>
+                STATUS:
+                <span class="red">UNRESOLVED</span>
+            </p>
+
+            <p>
+                ROOM 9:
+                <span class="red">DO NOT ENTER</span>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        SOME TRUTHS ARE BETTER LEFT BURIED.
+
+    </footer>
+
+</body>
+</html>
