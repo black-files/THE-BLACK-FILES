@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CASE #013 — The Room That Watched Back</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:#c7c7c7;
+    font-family:"Share Tech Mono",monospace;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.88)
+    ),
+    url("creepy-room.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    z-index:-3;
+}
+
+.fog{
+    position:fixed;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at center,
+        transparent 15%,
+        rgba(0,0,0,.85) 85%
+    );
+
+    z-index:2;
+    pointer-events:none;
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+
+    background-image:
+    radial-gradient(
+        rgba(255,255,255,.15) 1px,
+        transparent 1px
+    );
+
+    background-size:4px 4px;
+    opacity:.07;
+
+    pointer-events:none;
+    z-index:5;
+}
+
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+
+    padding:20px 7%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(0,0,0,.72);
+    border-bottom:1px solid rgba(255,0,0,.25);
+
+    backdrop-filter:blur(8px);
+
+    z-index:10;
+}
+
+.logo{
+    font-size:22px;
+    letter-spacing:3px;
+    color:white;
+}
+
+.logo span{
+    color:#b30000;
+}
+
+.case-number{
+    color:#777;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+
+/* MAIN */
+
+main{
+    position:relative;
+    z-index:3;
+}
+
+section{
+    min-height:100vh;
+
+    padding:130px 8% 80px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    align-items:center;
+}
+
+.classified{
+    color:#b00000;
+    letter-spacing:5px;
+    font-size:13px;
+
+    margin-bottom:25px;
+
+    animation:flicker 3s infinite;
+}
+
+.hero h1{
+    font-family:"Creepster",cursive;
+
+    font-size:clamp(60px,10vw,125px);
+
+    color:#eee;
+
+    letter-spacing:5px;
+
+    text-shadow:
+    3px 0 #7d0000,
+    -3px 0 #300000,
+    0 0 25px rgba(180,0,0,.5);
+
+    animation:titleGlitch 4s infinite;
+}
+
+.hero h2{
+    margin-top:15px;
+
+    color:#8d0000;
+
+    font-size:clamp(20px,3vw,34px);
+
+    letter-spacing:6px;
+}
+
+.hero p{
+    max-width:650px;
+
+    margin-top:30px;
+
+    color:#999;
+
+    line-height:1.9;
+}
+
+.warning{
+    margin-top:35px;
+
+    padding:15px 25px;
+
+    border:1px solid #610000;
+
+    color:#a40000;
+
+    background:rgba(50,0,0,.18);
+
+    letter-spacing:2px;
+
+    animation:pulse 2s infinite;
+}
+
+
+/* STORY */
+
+.story{
+    max-width:900px;
+    margin:auto;
+}
+
+.label{
+    color:#850000;
+
+    font-size:13px;
+
+    letter-spacing:4px;
+
+    margin-bottom:15px;
+}
+
+.story h2{
+    color:#eee;
+
+    font-size:38px;
+
+    margin-bottom:30px;
+}
+
+.story p{
+    color:#aaa;
+
+    line-height:2;
+
+    margin-bottom:25px;
+
+    font-size:16px;
+}
+
+.story strong{
+    color:#b50000;
+}
+
+
+/* QUOTE */
+
+.quote{
+    margin:40px 0;
+
+    padding:30px;
+
+    border-left:3px solid #8b0000;
+
+    background:rgba(0,0,0,.55);
+
+    color:#ddd;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    box-shadow:0 0 30px rgba(100,0,0,.12);
+}
+
+
+/* INCIDENT */
+
+.incident{
+    background:rgba(0,0,0,.45);
+
+    border-top:1px solid rgba(150,0,0,.2);
+    border-bottom:1px solid rgba(150,0,0,.2);
+}
+
+.incident-box{
+    max-width:850px;
+    margin:auto;
+
+    padding:35px;
+
+    background:rgba(5,5,5,.75);
+
+    border:1px solid #300000;
+
+    box-shadow:
+    0 0 40px rgba(80,0,0,.12);
+}
+
+.incident-box p{
+    line-height:2;
+    margin:14px 0;
+    color:#999;
+}
+
+.red{
+    color:#a00000;
+}
+
+
+/* FINAL */
+
+.final{
+    text-align:center;
+    align-items:center;
+}
+
+.final h2{
+    font-family:"Creepster",cursive;
+
+    font-size:clamp(45px,7vw,80px);
+
+    color:#b00000;
+
+    text-shadow:0 0 25px rgba(150,0,0,.5);
+
+    animation:flicker 2.5s infinite;
+}
+
+.final p{
+    max-width:650px;
+
+    margin-top:25px;
+
+    color:#999;
+
+    line-height:1.9;
+}
+
+.last-line{
+    margin-top:45px;
+
+    color:#ddd;
+
+    font-size:21px;
+
+    letter-spacing:2px;
+}
+
+.last-line span{
+    color:#a00000;
+}
+
+
+/* STATUS */
+
+.status{
+    min-height:auto;
+
+    padding:70px 8%;
+
+    text-align:center;
+
+    border-top:1px solid #260000;
+
+    background:rgba(0,0,0,.8);
+}
+
+.status h3{
+    color:#800000;
+
+    letter-spacing:4px;
+
+    margin-bottom:15px;
+}
+
+.status p{
+    color:#555;
+
+    font-size:13px;
+}
+
+
+/* FOOTER */
+
+footer{
+    padding:30px;
+
+    text-align:center;
+
+    background:#020202;
+
+    color:#444;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+}
+
+
+/* ANIMATIONS */
+
+@keyframes flicker{
+
+    0%,18%,22%,63%,64%,65%,100%{
+        opacity:1;
+    }
+
+    19%,21%,62%{
+        opacity:.25;
+    }
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        box-shadow:0 0 0 rgba(120,0,0,0);
+    }
+
+    50%{
+        box-shadow:0 0 25px rgba(120,0,0,.25);
+    }
+}
+
+@keyframes titleGlitch{
+
+    0%,90%,100%{
+        transform:translateX(0);
+    }
+
+    91%{
+        transform:translateX(-4px);
+    }
+
+    92%{
+        transform:translateX(5px);
+    }
+
+    93%{
+        transform:translateX(-2px);
+    }
+
+    94%{
+        transform:translateX(0);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    header{
+        padding:17px 5%;
+    }
+
+    .case-number{
+        font-size:10px;
+    }
+
+    section{
+        padding:110px 7% 70px;
+    }
+
+    .hero h1{
+        font-size:58px;
+    }
+
+    .hero h2{
+        font-size:18px;
+        letter-spacing:3px;
+    }
+
+    .story h2{
+        font-size:30px;
+    }
+
+    .story p{
+        font-size:14px;
+    }
+
+    .quote{
+        font-size:17px;
+        padding:22px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="noise"></div>
+<div class="fog"></div>
+
+
+<header>
+
+    <div class="logo">
+        BLACK<span>FILES</span>
+    </div>
+
+    <div class="case-number">
+        CASE #013
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="classified">
+        [ CLASSIFIED ACCESS ONLY ]
+    </div>
+
+    <h1>
+        THE ROOM
+    </h1>
+
+    <h2>
+        THAT WATCHED BACK
+    </h2>
+
+    <p>
+        Ek aisa room jisme na koi window thi,
+        na camera aur na hi mirror.
+
+        Phir bhi...
+        room ke andar jo bhi hota tha,
+        wo sab kuch dekhta tha.
+    </p>
+
+    <div class="warning">
+        ⚠ AGAR PADH RAHE HO TO PICHE MAT DEKHNA
+    </div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section>
+
+<div class="story">
+
+    <div class="label">
+        CASE FILE // 013
+    </div>
+
+    <h2>
+        SAB KUCH NORMAL THA...
+    </h2>
+
+    <p>
+        Ye building almost
+        <strong>11 saal se abandoned</strong>
+        thi.
+    </p>
+
+    <p>
+        Kisi ko nahi pata tha ki ye building
+        asal mein kiski thi.
+    </p>
+
+    <p>
+        Na koi proper record tha,
+        na photos,
+        aur na hi iska exact address.
+    </p>
+
+    <p>
+        Lekin building ke andar
+        ek room tha jo sabse strange tha.
+    </p>
+
+    <div class="quote">
+
+        "Room bilkul empty tha...
+
+        Lekin camera mein
+        kisi insaan ki shadow
+        investigator ke bilkul peeche
+        dikh rahi thi."
+
+    </div>
+
+    <p>
+        Problem ye thi...
+
+        investigator room mein
+        <strong>bilkul akela</strong>
+        gaya tha.
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- INCIDENT -->
+
+<section class="incident">
+
+<div class="incident-box">
+
+    <div class="label">
+        INCIDENT LOG // 03:17 AM
+    </div>
+
+    <p>
+        Raat ke exactly
+        <span class="red">03:17 AM</span>
+        par investigator room ke andar gaya.
+    </p>
+
+    <p>
+        Room mein sirf ek chair thi,
+        ek purana bulb tha,
+        aur chaar completely empty walls.
+    </p>
+
+    <p>
+        Usne camera floor par rakh diya.
+    </p>
+
+    <p>
+        Pehle 17 minutes tak
+        kuch bhi nahi hua.
+    </p>
+
+    <p>
+        Phir...
+    </p>
+
+    <p>
+        <span class="red">
+            chair apne aap move hui.
+        </span>
+    </p>
+
+    <p>
+        Lekin chair par koi baitha nahi tha.
+    </p>
+
+    <p>
+        Investigator chair ko dekh raha tha...
+    </p>
+
+    <p>
+        Lekin camera kuch aur record kar raha tha.
+    </p>
+
+    <div class="quote">
+
+        Uske bilkul peeche
+        koi khada tha.
+
+    </div>
+
+    <p>
+        Aur sabse creepy baat?
+
+        Usse kuch bhi pata nahi chala.
+    </p>
+
+</div>
+
+</section>
+
+
+<!-- SECOND RECORDING -->
+
+<section>
+
+<div class="story">
+
+    <div class="label">
+        RECOVERED AUDIO
+    </div>
+
+    <h2>
+        SECOND RECORDING
+    </h2>
+
+    <p>
+        03:31 AM par investigator
+        achanak bolna band kar deta hai.
+    </p>
+
+    <p>
+        Lagbhag 30 seconds tak
+        recording mein sirf silence tha.
+    </p>
+
+    <p>
+        Phir uski awaaz bahut dheere
+        whisper karte hue record hui.
+    </p>
+
+    <div class="quote">
+
+        "Ye room...
+        saans kyun le raha hai?"
+
+    </div>
+
+    <p>
+        Uske turant baad
+        light band ho gayi.
+    </p>
+
+    <p>
+        Kuch seconds baad light wapas aayi...
+    </p>
+
+    <p>
+        Lekin chair ab camera ke
+        bilkul saamne thi.
+    </p>
+
+    <p>
+        Aur wall par ek message likha hua tha.
+    </p>
+
+    <div class="quote">
+
+        TUM ROOM KO NAHI DEKH RAHE HO.
+
+        <br><br>
+
+        ROOM TUMHE DEKH RAHA HAI.
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final">
+
+    <div class="label">
+        FINAL ENTRY
+    </div>
+
+    <h2>
+        FILE CORRUPTED
+    </h2>
+
+    <p>
+        Investigator us raat ke baad
+        kabhi wapas nahi aaya.
+    </p>
+
+    <p>
+        Agle din poori building search ki gayi.
+    </p>
+
+    <p>
+        Room completely empty tha.
+    </p>
+
+    <p>
+        Na camera mila.
+        Na chair.
+        Na wall par koi message.
+    </p>
+
+    <div class="last-line">
+
+        Lekin ek cheez mili...
+
+        <br><br>
+
+        <span>
+            EK NAYA DOOR.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS -->
+
+<section class="status">
+
+    <h3>
+        CASE STATUS
+    </h3>
+
+    <p>
+        UNKNOWN // INVESTIGATION TERMINATED
+    </p>
+
+    <br>
+
+    <p>
+        LOCATION: CLASSIFIED
+    </p>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+    THE BLACK FILES © 2026
+
+    <br><br>
+
+    KUCH FILES KO KABHI OPEN NAHI KARNA CHAHIYE.
+
+</footer>
+
+</body>
+</html>
