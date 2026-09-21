@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CASE #013 | The Room That Breathed</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #c7c7c7;
+            font-family: "Share Tech Mono", monospace;
+            overflow-x: hidden;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.58),
+                    rgba(0,0,0,.88)
+                ),
+                url("breath.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* DARK FOG */
+
+        .fog {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    transparent 15%,
+                    rgba(0,0,0,.35) 55%,
+                    rgba(0,0,0,.88) 100%
+                );
+        }
+
+        /* NOISE */
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+
+            opacity: .07;
+
+            background-image:
+                radial-gradient(
+                    rgba(255,255,255,.5) 1px,
+                    transparent 1px
+                );
+
+            background-size: 4px 4px;
+        }
+
+        /* HEADER */
+
+        header {
+            position: relative;
+            z-index: 10;
+
+            text-align: center;
+            padding: 70px 20px 40px;
+        }
+
+        .case-number {
+            color: #777;
+            font-size: 14px;
+            letter-spacing: 5px;
+        }
+
+        h1 {
+            margin-top: 15px;
+
+            font-family: "Creepster", cursive;
+            font-size: clamp(45px, 8vw, 90px);
+
+            color: #b30000;
+
+            text-shadow:
+                0 0 10px #400000,
+                0 0 30px #150000;
+
+            animation: flicker 4s infinite;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: #888;
+            letter-spacing: 3px;
+            font-size: 13px;
+        }
+
+        /* MAIN */
+
+        main {
+            position: relative;
+            z-index: 10;
+
+            width: min(900px, 90%);
+            margin: auto;
+            padding-bottom: 100px;
+        }
+
+        /* WARNING */
+
+        .warning {
+            border: 1px solid #550000;
+            background: rgba(20,0,0,.55);
+
+            padding: 25px;
+            margin: 20px 0 60px;
+
+            text-align: center;
+
+            box-shadow:
+                0 0 25px rgba(120,0,0,.15);
+        }
+
+        .warning h2 {
+            color: #d00000;
+            font-size: 18px;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .warning p {
+            color: #888;
+            line-height: 1.7;
+        }
+
+        /* STORY */
+
+        .story {
+            margin-bottom: 70px;
+        }
+
+        .story h2 {
+            font-family: "Creepster", cursive;
+            font-size: 38px;
+            color: #a00000;
+            margin-bottom: 25px;
+
+            text-shadow: 0 0 15px #250000;
+        }
+
+        .story p {
+            font-size: 16px;
+            line-height: 2;
+            color: #bdbdbd;
+            margin-bottom: 25px;
+        }
+
+        .story strong {
+            color: #e00000;
+        }
+
+        /* QUOTE */
+
+        .quote {
+            border-left: 3px solid #800000;
+
+            padding: 20px 25px;
+            margin: 35px 0;
+
+            background: rgba(15,0,0,.45);
+
+            color: #aaa;
+            font-size: 18px;
+            line-height: 1.8;
+
+            box-shadow: inset 10px 0 30px rgba(80,0,0,.08);
+        }
+
+        /* BREATHING ROOM */
+
+        .breathing-room {
+            width: 100%;
+            min-height: 280px;
+
+            margin: 50px 0;
+
+            border: 1px solid #3d0000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    rgba(80,0,0,.22),
+                    rgba(0,0,0,.85)
+                );
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .breathing-room::before {
+            content: "";
+
+            position: absolute;
+            width: 70%;
+            height: 70%;
+
+            border-radius: 50%;
+
+            background: rgba(80,0,0,.12);
+
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        .room-text {
+            position: relative;
+            z-index: 2;
+
+            text-align: center;
+
+            color: #777;
+            letter-spacing: 5px;
+
+            animation: textPulse 4s infinite;
+        }
+
+        .room-text span {
+            display: block;
+            margin-top: 15px;
+
+            color: #a00000;
+            font-size: 13px;
+            letter-spacing: 3px;
+        }
+
+        /* TIME */
+
+        .time {
+            text-align: center;
+
+            font-size: 50px;
+            color: #a00000;
+
+            margin: 45px 0;
+
+            text-shadow:
+                0 0 15px #400000,
+                0 0 35px #150000;
+
+            animation: pulse 2s infinite;
+        }
+
+        /* FINAL */
+
+        .final {
+            margin-top: 80px;
+
+            border-top: 1px solid #300000;
+            border-bottom: 1px solid #300000;
+
+            padding: 40px 20px;
+
+            text-align: center;
+        }
+
+        .final h2 {
+            font-family: "Creepster", cursive;
+            font-size: 45px;
+
+            color: #b00000;
+
+            margin-bottom: 25px;
+        }
+
+        .final p {
+            line-height: 2;
+            color: #999;
+        }
+
+        /* STATUS */
+
+        .status {
+            margin-top: 60px;
+            padding: 30px;
+
+            text-align: center;
+
+            background: rgba(15,15,15,.65);
+
+            border: 1px solid #222;
+        }
+
+        .status span {
+            display: block;
+
+            color: #b00000;
+
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            position: relative;
+            z-index: 10;
+
+            text-align: center;
+            padding: 40px 20px;
+
+            border-top: 1px solid #1c1c1c;
+
+            color: #555;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes breathe {
+
+            0%, 100% {
+                transform: scale(.85);
+                opacity: .25;
+            }
+
+            50% {
+                transform: scale(1.25);
+                opacity: .65;
+            }
+        }
+
+        @keyframes textPulse {
+
+            0%, 100% {
+                opacity: .5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%, 100% {
+                opacity: .5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes flicker {
+
+            0%, 18%, 22%, 63%, 100% {
+                opacity: 1;
+            }
+
+            20%, 21%, 64% {
+                opacity: .45;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding-top: 45px;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+
+            .story p {
+                font-size: 14px;
+                line-height: 1.8;
+            }
+
+            .quote {
+                font-size: 15px;
+            }
+
+            .time {
+                font-size: 38px;
+            }
+
+            .breathing-room {
+                min-height: 220px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="fog"></div>
+    <div class="noise"></div>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="case-number">
+            CASE #013
+        </div>
+
+        <h1>THE ROOM THAT BREATHED</h1>
+
+        <div class="subtitle">
+            CLASSIFIED HORROR FILE
+        </div>
+
+    </header>
+
+
+    <main>
+
+
+        <!-- WARNING -->
+
+        <section class="warning">
+
+            <h2>⚠ WARNING</h2>
+
+            <p>
+                Is file ko public release ke liye approve nahi kiya gaya.
+                Complete recording available nahi hai.
+            </p>
+
+        </section>
+
+
+        <!-- START -->
+
+        <section class="story">
+
+            <h2>THE BEGINNING</h2>
+
+            <p>
+                Ye incident <strong>17 October, 2019</strong> ka hai.
+            </p>
+
+            <p>
+                Dead Valley ke bahar ek purana ghar tha jo almost
+                30 saal se abandoned pada tha.
+            </p>
+
+            <p>
+                Local log us ghar ke paas bhi nahi jaate the.
+                Sab bas ek hi baat bolte the...
+            </p>
+
+            <div class="quote">
+                "Ghar me ek room hai... uske andar mat jaana."
+            </div>
+
+            <p>
+                Kisi ko nahi pata tha ki woh room exactly kaha tha.
+            </p>
+
+            <p>
+                House ke andar 7 rooms the.
+                Lekin purane documents me <strong>8 rooms</strong> likhe hue the.
+            </p>
+
+        </section>
+
+
+        <!-- ROOM -->
+
+        <section class="story">
+
+            <h2>THE ROOM</h2>
+
+            <p>
+                Ek din <strong>Arav</strong> naam ka ladka apne
+                2 friends ke saath us ghar me gaya.
+            </p>
+
+            <p>
+                Unka plan simple tha...
+                bas house explore karna aur kuch photos lena.
+            </p>
+
+            <p>
+                Starting me sab normal tha.
+                Dust... broken furniture...
+                purani paintings...
+                aur ek ajeeb silence.
+            </p>
+
+            <p>
+                Phir Arav ko hallway ke end me ek door mila.
+            </p>
+
+            <p>
+                Door bilkul naya lag raha tha.
+                Baaki pura ghar old tha...
+                lekin ye door almost perfect condition me tha.
+            </p>
+
+            <div class="quote">
+                ROOM 08
+            </div>
+
+        </section>
+
+
+        <!-- FIRST SOUND -->
+
+        <section class="story">
+
+            <h2>THE FIRST SOUND</h2>
+
+            <p>
+                Jaise hi Arav door ke paas gaya...
+                andar se ek halki si awaaz aayi.
+            </p>
+
+            <div class="quote">
+                THUMP...<br><br>
+                THUMP...
+            </div>
+
+            <p>
+                Arav ne door par haath rakha.
+                Door halka sa warm tha.
+            </p>
+
+            <p>
+                Ghar pura ice-cold tha.
+                Sirf ye door...
+                <strong>warm tha.</strong>
+            </p>
+
+        </section>
+
+
+        <!-- TIME -->
+
+        <div class="time">
+            03:17 AM
+        </div>
+
+
+        <!-- BREATHING ROOM -->
+
+        <div class="breathing-room">
+
+            <div class="room-text">
+
+                ROOM 08
+
+                <span>
+                    INHALE... EXHALE...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- BREATHING -->
+
+        <section class="story">
+
+            <h2>THE WALLS</h2>
+
+            <p>
+                Room ki walls bhi move karne lagi.
+            </p>
+
+            <p>
+                <strong>Inhale...</strong>
+                walls thodi andar gayi.
+            </p>
+
+            <p>
+                <strong>Exhale...</strong>
+                walls bahar aa gayi.
+            </p>
+
+            <p>
+                Room literally...
+                <strong>breathing kar raha tha.</strong>
+            </p>
+
+            <div class="quote">
+                "DON'T LET IT KNOW YOU'RE AFRAID."
+            </div>
+
+        </section>
+
+
+        <!-- VOICE -->
+
+        <section class="story">
+
+            <h2>THE VOICE</h2>
+
+            <p>
+                Andhere me ek awaaz aayi.
+                Bahut halki...
+                almost whisper jaisi.
+            </p>
+
+            <div class="quote">
+                "Arav..."
+            </div>
+
+            <p>
+                Arav ne peeche dekha.
+                Koi nahi tha.
+            </p>
+
+            <p>
+                Phir wahi awaaz...
+            </p>
+
+            <div class="quote">
+                "Arav..."
+            </div>
+
+            <p>
+                Is baar bilkul uske peeche se.
+            </p>
+
+        </section>
+
+
+        <!-- RECORDING -->
+
+        <section class="story">
+
+            <h2>THE RECORDING</h2>
+
+            <p>
+                Arav ke friends ne uski screams suni.
+                Dono Room 08 ke paas aaye.
+            </p>
+
+            <p>
+                Lekin door completely normal tha.
+            </p>
+
+            <p>
+                Room empty tha.
+                Arav andar nahi tha.
+            </p>
+
+            <p>
+                Sirf uska phone floor par pada tha.
+            </p>
+
+            <div class="quote">
+
+                "Ye room... alive hai..."
+
+                <br><br>
+
+                <strong>
+                    "Ab tumhari baari hai."
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- AFTER -->
+
+        <section class="story">
+
+            <h2>AFTER THAT</h2>
+
+            <p>
+                Police ne poora house search kiya.
+                Arav kabhi nahi mila.
+            </p>
+
+            <p>
+                Lekin investigation ke time ek strange cheez mili.
+            </p>
+
+            <p>
+                Police ke original map me house me
+                <strong>7 rooms</strong> the.
+            </p>
+
+            <p>
+                Room 08 exist hi nahi karta tha.
+            </p>
+
+            <div class="quote">
+                ROOM 08 WAS NEVER THERE.
+            </div>
+
+        </section>
+
+
+        <!-- FINAL -->
+
+        <section class="final">
+
+            <h2>FINAL NOTE</h2>
+
+            <p>
+                House ko demolish karne ka order diya gaya.
+            </p>
+
+            <p>
+                Lekin demolition team jab next morning waha pahunchi...
+                house ke andar <strong>8 rooms</strong> the.
+            </p>
+
+            <p>
+                Aur Room 08 ke door par number change ho chuka tha.
+            </p>
+
+            <div class="quote">
+
+                08 ❌
+
+                <br><br>
+
+                09 ✔️
+
+                <br><br>
+
+                "ONE ROOM IS NEVER ENOUGH."
+
+            </div>
+
+        </section>
+
+
+        <!-- STATUS -->
+
+        <section class="status">
+
+            CASE #013
+
+            <span>
+                STATUS: UNKNOWN
+            </span>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        THE BLACK FILES © 2026
+
+        <br><br>
+
+        SOME FILES SHOULD NEVER BE OPENED.
+
+    </footer>
+
+
+</body>
+</html>
